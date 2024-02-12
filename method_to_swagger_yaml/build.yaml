@@ -1,0 +1,8 @@
+builders:
+  method_to_swagger_yaml|swaggerYamlBuilder:
+    import: "package:method_to_swagger_yaml/method_to_swagger_yaml.dart"
+    builder_factories: ["swaggerYamlBuilder"]
+    build_extensions: { ".dart": [".yaml.dart"] }
+    auto_apply: dependents
+    build_to: source
+    applies_builders: ["source_gen|combining_builder"]

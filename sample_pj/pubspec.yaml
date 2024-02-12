@@ -1,0 +1,32 @@
+name: sample_pj
+description: "method to swagger json annotation."
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.2.4 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  freezed: ^2.4.6
+  json_serializable: ^6.7.1
+
+  method_to_swagger_yaml:
+    path: ../method_to_swagger_yaml
+  method_to_swagger_yaml_annotation:
+    path: ../method_to_swagger_yaml_annotation
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+  build_runner: ^2.4.6
+  analyzer: ^5.13.0
+
+flutter:
+  uses-material-design: true

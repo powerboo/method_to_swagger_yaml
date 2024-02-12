@@ -1,0 +1,53 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "method_to_swagger_yaml",
+      "cwd": "method_to_swagger_yaml",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "method_to_swagger_yaml_annotation",
+      "cwd": "method_to_swagger_yaml_annotation",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "method_to_swagger_yaml_annotation (profile mode)",
+      "cwd": "method_to_swagger_yaml_annotation",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "method_to_swagger_yaml_annotation (release mode)",
+      "cwd": "method_to_swagger_yaml_annotation",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    },
+    {
+      "name": "sample_pj",
+      "cwd": "sample_pj",
+      "request": "launch",
+      "type": "dart",
+      "program": ".dart_tool/build/entrypoint/build.dart",
+      "args": ["build", "--delete-conflicting-outputs"]
+    },
+    {
+      "name": "sample_pj (profile mode)",
+      "cwd": "sample_pj",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "sample_pj (release mode)",
+      "cwd": "sample_pj",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    }
+  ]
+}
