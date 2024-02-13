@@ -17,8 +17,7 @@ dependencies:
 
   method_to_swagger_yaml:
     path: ../method_to_swagger_yaml
-  method_to_swagger_yaml_annotation:
-    path: ../method_to_swagger_yaml_annotation
+  method_to_swagger_yaml_annotation: ^0.0.1
 
 dev_dependencies:
   flutter_test:

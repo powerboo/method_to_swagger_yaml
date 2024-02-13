@@ -1,8 +1,12 @@
 builders:
   method_to_swagger_yaml|swaggerYamlBuilder:
+    defaults:
+      options:
+        build_extensions:
+          "^lib/{{dir}}/{{file}}.dart": "lib/{{dir}}/{{file}}.yaml"
     import: "package:method_to_swagger_yaml/method_to_swagger_yaml.dart"
     builder_factories: ["swaggerYamlBuilder"]
-    build_extensions: { ".dart": [".yaml.dart"] }
+    build_extensions: { ".dart": [".yaml"] }
     auto_apply: dependents
     build_to: source
     applies_builders: ["source_gen|combining_builder"]

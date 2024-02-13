@@ -1,3 +1,5 @@
+# GENERATED CODE - DO NOT MODIFY BY HAND
+
 openapi: 3.0.0
 info:
   title: sample.
@@ -16,14 +18,14 @@ paths:
           in: query
           required: true
           schema:
-            $ref: "#/components/schemas/GetMethodNamedClassValue"
+            $ref: '#/components/schemas/GetMethodNamedClassValue'
         - name: requiredNamedNullableClassValue
           in: query
           required: false
           schema:
-            $ref: "#/components/schemas/GetMethodRequiredNamedNullableClassValue"
+            $ref: '#/components/schemas/GetMethodRequiredNamedNullableClassValue'
       responses:
-        "200":
+        '200':
           description: Successful operation
 components:
   schemas:
