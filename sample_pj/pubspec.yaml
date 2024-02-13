@@ -2,7 +2,7 @@ name: sample_pj
 description: "method to swagger json annotation."
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 0.0.2
 
 environment:
   sdk: ">=3.2.4 <4.0.0"
@@ -15,8 +15,7 @@ dependencies:
   freezed: ^2.4.6
   json_serializable: ^6.7.1
 
-  method_to_swagger_yaml:
-    path: ../method_to_swagger_yaml
+  method_to_swagger_yaml: ^0.0.2
   method_to_swagger_yaml_annotation: ^0.0.1
 
 dev_dependencies:
