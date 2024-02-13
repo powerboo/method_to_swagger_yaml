@@ -364,8 +364,8 @@ class YamlEntity {
           }
           final requestParameterDiv = rp.getField("requestParameterDiv");
           final description = rp.getField("description")?.toString();
-          final pathStyle = rp.getField("pathStyle");
-          final queryStyle = rp.getField("queryStyle");
+          // final pathStyle = rp.getField("pathStyle");
+          // final queryStyle = rp.getField("queryStyle");
           final explode = rp.getField("explode")?.toBoolValue();
           if (requestParameterDiv == null) {
             throw InvalidGenerationSourceError(
