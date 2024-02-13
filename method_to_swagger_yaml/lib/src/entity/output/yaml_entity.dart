@@ -11,8 +11,8 @@ import 'package:method_to_swagger_yaml/src/entity/output/response_entity.dart';
 import 'package:method_to_swagger_yaml/src/entity/output/tag_entity.dart';
 import 'package:method_to_swagger_yaml_annotation/method_to_swagger_yaml_annotation.dart';
 import 'package:logging/logging.dart';
-// import 'package:source_gen/source_gen.dart';
-import 'package:method_to_swagger_yaml/src/builder/generator.dart';
+import 'package:source_gen/source_gen.dart';
+// import 'package:method_to_swagger_yaml/src/builder/generator.dart';
 
 final log = Logger("AbstractClassEntity");
 
@@ -518,6 +518,7 @@ class YamlEntity {
 
   String dump() {
     StringBuffer yamlBuffer = StringBuffer();
+    yamlBuffer.writeln("/*");
     yamlBuffer.writeln("openapi: 3.0.0");
     yamlBuffer.writeln("info:");
     yamlBuffer.writeln("  title: ${convertTargetClass.title}");
@@ -564,6 +565,7 @@ class YamlEntity {
 
       yamlBuffer.write(component.toString());
     }
+    yamlBuffer.writeln("// */");
 
     return yamlBuffer.toString();
   }

@@ -1,5 +1,10 @@
-# GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
+// **************************************************************************
+// SwaggerYamlGenerator
+// **************************************************************************
+
+/*
 openapi: 3.0.0
 info:
   title: sample.
@@ -47,3 +52,4 @@ components:
           properties:
             value:
               type: string
+*/
