@@ -1,26 +1,28 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/src/builder/build_step.dart';
-import 'package:source_gen/source_gen.dart';
+// import 'package:source_gen/source_gen.dart';
 
 import 'package:method_to_swagger_yaml/src/entity/output/yaml_entity.dart';
 import 'package:method_to_swagger_yaml_annotation/method_to_swagger_yaml_annotation.dart';
-// import 'package:method_to_swagger_yaml/src/builder/generator.dart';
-// import 'package:method_to_swagger_yaml/src/builder/constants/reader.dart' as my;
-// import 'package:method_to_swagger_yaml/src/builder/generator_for_annotation.dart' as my;
+import 'package:method_to_swagger_yaml/src/builder/generator.dart';
+import 'package:method_to_swagger_yaml/src/builder/constants/reader.dart' as my;
+import 'package:method_to_swagger_yaml/src/builder/generator_for_annotation.dart' as my;
 
-class SwaggerYamlGenerator extends GeneratorForAnnotation<ConvertTargetClass> {
+class SwaggerYamlGenerator extends my.GeneratorForAnnotation<ConvertTargetClass> {
+  SwaggerYamlGenerator() : super(throwOnUnresolved: true);
+
   @override
   generateForAnnotatedElement(
     Element element,
-    ConstantReader annotation,
+    my.ConstantReader annotation,
     BuildStep buildStep,
   ) {
     // is element class?
     late final ClassElement classElement;
     if (element.kind != ElementKind.CLASS || element is! ClassElement) {
-      throw InvalidGenerationSourceError(
+      throw Exception(
         "[${element.displayName}] is not ClassElement. runtimeType is [${element.runtimeType}]",
-        element: element,
+        // element: element,
       );
     }
     classElement = element;

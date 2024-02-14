@@ -1,0 +1,19 @@
+openapi: 3.0.0
+info:
+  title: multiple tag.
+  version: 0.0.1
+tags:
+  - name: tag_1
+    description: tag 1.
+  - name: tag_2
+    description: tag 2.
+paths:
+  /multiple-tag:
+    get:
+      operationId: getMethod
+      tags:
+        - tag_1
+        - tag_2
+      responses:
+        '200':
+          description: Successful operation

@@ -1,0 +1,16 @@
+openapi: 3.0.0
+info:
+  title: multiple method.
+  version: 0.0.1
+paths:
+  /multiple-method:
+    get:
+      operationId: getMethod
+      responses:
+        '200':
+          description: Successful operation
+    post:
+      operationId: postMethod
+      responses:
+        '200':
+          description: Successful operation

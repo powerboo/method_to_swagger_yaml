@@ -1,0 +1,18 @@
+openapi: 3.0.0
+info:
+  title: multiple method with different tag.
+  version: 0.0.1
+tags:
+  - name: tag_1
+    description: tag 1.
+  - name: tag_2
+    description: tag 2.
+paths:
+  /multiple-method-with-complex-tag:
+    get:
+      operationId: getMethod
+      tags:
+        - tag_1
+      responses:
+        '200':
+          description: Successful operation

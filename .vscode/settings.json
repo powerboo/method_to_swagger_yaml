@@ -1,3 +1,4 @@
 {
-  "cSpell.words": ["powerboo"]
+  "cSpell.words": ["powerboo"],
+  "prettier.singleQuote": true
 }

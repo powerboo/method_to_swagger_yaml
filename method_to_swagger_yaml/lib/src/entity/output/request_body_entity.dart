@@ -1,6 +1,6 @@
 import 'package:method_to_swagger_yaml/src/entity/output/request_body/body_content.dart';
-import 'package:source_gen/source_gen.dart';
-// import 'package:method_to_swagger_yaml/src/builder/generator.dart';
+// import 'package:source_gen/source_gen.dart';
+import 'package:method_to_swagger_yaml/src/builder/generator.dart';
 
 /*
       requestBody:

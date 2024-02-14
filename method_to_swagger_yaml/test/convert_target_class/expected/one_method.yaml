@@ -1,0 +1,11 @@
+openapi: 3.0.0
+info:
+  title: one method.
+  version: 0.0.1
+paths:
+  /one-method:
+    get:
+      operationId: oneMethod
+      responses:
+        '200':
+          description: Successful operation

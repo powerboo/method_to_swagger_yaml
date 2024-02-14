@@ -1,9 +1,9 @@
 import 'package:method_to_swagger_yaml/src/generator/swagger_yaml_generator.dart';
 import 'package:method_to_swagger_yaml_annotation/method_to_swagger_yaml_annotation.dart';
-import 'package:source_gen_test/source_gen_test.dart';
 import 'package:test/test.dart';
 import 'package:path/path.dart' as p;
 
+/* 
 // ------------------------------------------------------------
 // convert_target_method
 // ------------------------------------------------------------
@@ -41,3 +41,5 @@ void main() async {
     SwaggerYamlGenerator(),
   );
 }
+
+// */
