@@ -23,7 +23,7 @@ class YamlBuilder implements Builder {
 
   @override
   Future<void> build(BuildStep buildStep) async {
-    final resolver = buildStep.resolver;
+    // final resolver = buildStep.resolver;
 
     /*
     if (_generator is GeneratorForAnnotation &&

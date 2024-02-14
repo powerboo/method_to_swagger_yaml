@@ -1,5 +1,4 @@
 import 'package:method_to_swagger_yaml_annotation/method_to_swagger_yaml_annotation.dart';
-import 'package:source_gen_test/annotations.dart';
 
 @ConvertTargetClass(
   title: "multiple method with complex tag.",

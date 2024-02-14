@@ -1,11 +1,11 @@
 name: sample_pj
-description: "method to swagger json annotation."
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
+description: 'method to swagger json annotation.'
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 version: 0.0.2
 
 environment:
-  sdk: ">=3.2.4 <4.0.0"
+  sdk: '>=3.2.4 <4.0.0'
 
 dependencies:
   flutter:

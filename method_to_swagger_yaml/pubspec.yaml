@@ -1,19 +1,22 @@
 name: method_to_swagger_yaml
-description: "method to swagger yaml."
-version: 0.0.2
+description: 'method to swagger yaml.'
+version: 0.0.3
 repository: https://github.com/powerboo/method_to_swagger_yaml
 
 environment:
-  sdk: ">=3.2.4 <4.0.0"
+  sdk: '>=3.2.4 <4.0.0'
 
 dependencies:
   build: ^2.3.1
   analyzer: ^5.7.1
   method_to_swagger_yaml_annotation: ^0.0.1
   logging: ^1.2.0
+  source_span: ^1.10.0
+  yaml: ^3.1.2
+  path: ^1.9.0
+  async: ^2.11.0
 
 dev_dependencies:
-  path: ^1.9.0
   build_runner: ^2.3.3
   build_test: ^2.2.2
   source_gen_test: ^1.0.6

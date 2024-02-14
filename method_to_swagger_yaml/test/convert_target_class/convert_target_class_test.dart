@@ -1,13 +1,9 @@
 import 'dart:io';
 
-import 'package:build/build.dart';
 import 'package:method_to_swagger_yaml/src/builder/yaml_builder.dart';
 import 'package:test/test.dart';
 import 'package:build_test/build_test.dart';
-import 'package:test/test.dart';
-import 'package:path/path.dart' as p;
 import 'package:method_to_swagger_yaml/src/generator/swagger_yaml_generator.dart';
-import 'package:method_to_swagger_yaml_annotation/method_to_swagger_yaml_annotation.dart';
 
 // ------------------------------------------------------------
 // convert_target_class
