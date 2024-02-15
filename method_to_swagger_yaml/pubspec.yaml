@@ -1,6 +1,6 @@
 name: method_to_swagger_yaml
 description: 'method to swagger yaml.'
-version: 0.0.3
+version: 0.0.4
 repository: https://github.com/powerboo/method_to_swagger_yaml
 
 environment:

@@ -1,3 +1,7 @@
+## 0.0.4
+
+mod test for custom generator.
+
 ## 0.0.3
 
 add custom builder.
