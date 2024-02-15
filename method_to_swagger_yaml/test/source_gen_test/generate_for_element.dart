@@ -5,13 +5,10 @@ import 'dart:async';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
-import 'package:dart_style/dart_style.dart' as dart_style;
 import 'package:source_gen/source_gen.dart';
 import 'package:source_gen/src/output_helpers.dart' show normalizeGeneratorOutput;
 
 const testPackageName = '__test__';
-
-final _formatter = dart_style.DartFormatter();
 
 final _testAnnotationWarnings = <String>{};
 
