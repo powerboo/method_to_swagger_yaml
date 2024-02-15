@@ -15,7 +15,7 @@ dependencies:
   freezed: ^2.4.6
   json_serializable: ^6.7.1
 
-  method_to_swagger_yaml: ^0.0.2
+  method_to_swagger_yaml: ^0.0.3
   method_to_swagger_yaml_annotation: ^0.0.1
 
 dev_dependencies:

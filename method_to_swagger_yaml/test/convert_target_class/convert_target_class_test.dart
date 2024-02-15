@@ -1,104 +1,161 @@
 import 'dart:io';
 
-import 'package:method_to_swagger_yaml/src/builder/yaml_builder.dart';
+import 'package:source_gen_test/source_gen_test.dart';
 import 'package:test/test.dart';
-import 'package:build_test/build_test.dart';
+import 'package:path/path.dart' as p;
+import 'package:method_to_swagger_yaml_annotation/method_to_swagger_yaml_annotation.dart';
 import 'package:method_to_swagger_yaml/src/generator/swagger_yaml_generator.dart';
+import '../source_gen_test/generate_for_element.dart';
 
 // ------------------------------------------------------------
 // convert_target_class
 // ------------------------------------------------------------
 void main() async {
+  initializeBuildLogTracking();
+
+  tearDown(() {
+    clearBuildLog();
+  });
+
+  final path = p.join('test', 'convert_target_class', 'test_data');
+
+  // annotated variable
+  final annotatedVariable = await initializeLibraryReaderForDirectory(
+    path,
+    'annotated_variable.dart',
+  );
+
+  testAnnotatedElements<ConvertTargetClass>(
+    annotatedVariable,
+    SwaggerYamlGenerator(),
+  );
+
+  // only support abstract class
+  final onlySupportAbstractClass = await initializeLibraryReaderForDirectory(
+    path,
+    'only_support_abstract_class.dart',
+  );
+
+  testAnnotatedElements<ConvertTargetClass>(
+    onlySupportAbstractClass,
+    SwaggerYamlGenerator(),
+  );
+
+  // does not have method
+  final doesNotHaveMethod = await initializeLibraryReaderForDirectory(
+    path,
+    'does_not_have_method.dart',
+  );
+
+  testAnnotatedElements<ConvertTargetClass>(
+    doesNotHaveMethod,
+    SwaggerYamlGenerator(),
+  );
+
+  // does not have annotated method
+  final doesNotHaveAnnotatedMethod = await initializeLibraryReaderForDirectory(
+    path,
+    'does_not_have_annotated_method.dart',
+  );
+
+  testAnnotatedElements<ConvertTargetClass>(
+    doesNotHaveAnnotatedMethod,
+    SwaggerYamlGenerator(),
+  );
+
+  // tag name is empty
+  final tagNameIsEmpty = await initializeLibraryReaderForDirectory(
+    path,
+    'tag_name_is_empty.dart',
+  );
+
+  testAnnotatedElements<ConvertTargetClass>(
+    tagNameIsEmpty,
+    SwaggerYamlGenerator(),
+  );
+
   // one method
-  test("one_method", () async {
-    const String fileName = "one_method";
-    await _test(fileName: fileName);
+  test('one_method', () async {
+    await _test(
+      path: path,
+      fileName: "one_method",
+      className: "OneMethod",
+    );
   });
 
   // multiple method
-  test("multiple_method", () async {
-    const String fileName = "multiple_method";
-    await _test(fileName: fileName);
+  test('multiple_method', () async {
+    await _test(
+      path: path,
+      fileName: "multiple_method",
+      className: "MultipleMethod",
+    );
   });
 
   // multiple method with same tag
-  test("multiple_method_with_same_tag", () async {
-    const String fileName = "multiple_method_with_same_tag";
-    await _test(fileName: fileName);
+  test('multiple_method_with_same_tag', () async {
+    await _test(
+      path: path,
+      fileName: "multiple_method_with_same_tag",
+      className: "MultipleMethodWithSameTag",
+    );
   });
 
   // multiple method with different tag
-  test("multiple_method_with_different_tag", () async {
-    const String fileName = "multiple_method_with_different_tag";
-    await _test(fileName: fileName);
+  test('multiple_method_with_different_tag', () async {
+    await _test(
+      path: path,
+      fileName: "multiple_method_with_different_tag",
+      className: "MultipleMethodDifferentTag",
+    );
   });
 
   // zero tag
-  test("zero_tag", () async {
-    const String fileName = "zero_tag";
-    await _test(fileName: fileName);
+  test('zero_tag', () async {
+    await _test(
+      path: path,
+      fileName: "zero_tag",
+      className: "ZeroTag",
+    );
   });
 
   // one tag
-  test("single_tag", () async {
-    const String fileName = "single_tag";
-    await _test(fileName: fileName);
+  test('single_tag', () async {
+    await _test(
+      path: path,
+      fileName: "single_tag",
+      className: "SingleTag",
+    );
   });
 
   // multiple tag
-  test("multiple_tag", () async {
-    const String fileName = "multiple_tag";
-    await _test(fileName: fileName);
+  test('multiple_tag', () async {
+    await _test(
+      path: path,
+      fileName: "multiple_tag",
+      className: "MultipleTag",
+    );
   });
-  /*
-  TODO: implements
-  // annotated variable
-  test("annotated variable", () async {
-    const String fileName = "annotated_variable";
-    await _test(fileName: fileName);
-  });
-
-  // only support abstract class
-  test("only support abstract class", () async {
-    const String fileName = "only_support_abstract_class";
-    _test(fileName: fileName);
-  });
-
-  // does not have method
-  test("does not have method", () async {
-    const String fileName = "does_not_have_method";
-    _test(fileName: fileName);
-  });
-
-  // does not have annotated method
-  test("does_not_have_annotated_method", () async {
-    const String fileName = "does_not_have_annotated_method";
-    await _test(fileName: fileName);
-  });
-  
-  // tag name is empty
-  test("tag_name_is_empty", () async {
-    const String fileName = "tag_name_is_empty";
-    await _test(fileName: fileName);
-  });
-  // */
 }
 
 Future<void> _test({
+  required String path,
   required String fileName,
+  required String className,
 }) async {
-  final input = {
-    'a|${fileName}.dart': File("test/convert_target_class/input_data/${fileName}.dart").readAsStringSync(),
-  };
-  final output = {
-    'a|${fileName}.yaml': File("test/convert_target_class/expected/${fileName}.yaml").readAsStringSync(),
-  };
-
-  await testBuilder(
-    YamlBuilder(
-      SwaggerYamlGenerator(),
-    ),
-    input,
-    outputs: output,
+  final libraryReader = await initializeLibraryReaderForDirectory(
+    path,
+    '${fileName}.dart',
   );
+
+  final createdValue = await generateTextForElement(
+    SwaggerYamlGenerator(),
+    libraryReader,
+    className,
+  );
+
+  final expectedPath = p.join('test', 'convert_target_class', 'expected', '${fileName}.yaml');
+  final expectedValue = File(expectedPath).readAsStringSync();
+
+  expect(createdValue, expectedValue);
 }

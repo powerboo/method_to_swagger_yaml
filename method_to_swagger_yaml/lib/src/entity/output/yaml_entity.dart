@@ -11,8 +11,7 @@ import 'package:method_to_swagger_yaml/src/entity/output/response_entity.dart';
 import 'package:method_to_swagger_yaml/src/entity/output/tag_entity.dart';
 import 'package:method_to_swagger_yaml_annotation/method_to_swagger_yaml_annotation.dart';
 import 'package:logging/logging.dart';
-// import 'package:source_gen/source_gen.dart';
-import 'package:method_to_swagger_yaml/src/builder/generator.dart';
+import 'package:source_gen/source_gen.dart';
 
 final log = Logger("AbstractClassEntity");
 
