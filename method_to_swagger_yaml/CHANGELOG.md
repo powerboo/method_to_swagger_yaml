@@ -1,3 +1,7 @@
+## 0.0.5
+
+update dependencies lib.
+
 ## 0.0.4
 
 mod test for custom generator.
