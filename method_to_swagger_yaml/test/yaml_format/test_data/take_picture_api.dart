@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:method_to_swagger_yaml_annotation/method_to_swagger_yaml_annotation.dart';
 
-import 'entity/target_picture.dart';
 import 'value_object/picture_id.dart';
 
 part 'take_picture_api.g.dart';

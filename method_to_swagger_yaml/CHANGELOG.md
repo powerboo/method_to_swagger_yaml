@@ -1,3 +1,7 @@
+## 0.0.6
+
+use yaml writer.
+
 ## 0.0.5
 
 update dependencies lib.
