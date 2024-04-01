@@ -1,45 +1,57 @@
-import 'package:method_to_swagger_yaml/src/entity/section/paths_section/body/request_body_section.dart';
 import 'package:method_to_swagger_yaml/src/entity/section/paths_section/body/request_parameter_section.dart';
+import 'package:method_to_swagger_yaml/src/entity/section/paths_section/body/request_body_section.dart';
 import 'package:method_to_swagger_yaml/src/entity/section/paths_section/body/response_section.dart';
 import 'package:method_to_swagger_yaml_annotation/method_to_swagger_yaml_annotation.dart';
 
 class PathEntity {
   final String path;
   final HttpMethodDiv httpMethodDiv;
+
+  final String operationId;
   final String? summary;
   final String? description;
-  final String operationId;
   final List<String> tagList;
-
-  final RequestBodySection? requestBodySection;
   final RequestParameterSection? requestParameterSection;
+  final RequestBodySection? requestBodySection;
   final ResponseSection responseSection;
 
   PathEntity({
-    required this.path,
-    required this.httpMethodDiv,
     required this.operationId,
     required this.summary,
     required this.description,
     required this.tagList,
-    required this.requestBodySection,
-    required this.requestParameterSection,
+
+    // v2
+    required this.path,
+    required this.httpMethodDiv,
     required this.responseSection,
+    required this.requestParameterSection,
+    required this.requestBodySection,
   }) {}
 
   Map<String, Object?> toMap() {
     final Map<String, Object?> m = {};
-    if (requestBodySection != null) {
-      final p = requestBodySection!.toMap();
-      if (p != null) {
-        m.addAll({"requestBody": p});
-      }
+    m.addAll({"operationId": operationId});
+    if (summary != null) {
+      m.addAll({"summary": summary});
+    }
+    if (description != null) {
+      m.addAll({"description": description});
+    }
+    if (tagList.isNotEmpty) {
+      m.addAll({"tags": tagList});
     }
     if (requestParameterSection != null) {
-      final p = requestParameterSection!.toMap();
-      m.addAll({"parameters": p});
+      m.addAll(requestParameterSection!.toMap());
     }
-    m.addAll({"responses": responseSection.toMap()});
+    if (requestBodySection != null) {
+      final result = requestBodySection!.toMap();
+      if (result != null) {
+        m.addAll(result);
+      }
+    }
+    m.addAll(responseSection.toMap());
+
     return m;
   }
 }

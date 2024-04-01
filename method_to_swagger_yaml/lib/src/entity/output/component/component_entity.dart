@@ -42,6 +42,21 @@ class ComponentEntity {
     return objectNode.isObject;
   }
 
+  Map<String, Object?> toMap() {
+    final Map<String, Object?> m = {};
+    if (!isObject) {
+      m.addAll({"type": ""});
+    } else {
+      m.addAll(objectNode.toMap());
+    }
+
+    return {name: m};
+  }
+
+  Map<String, Object?> toRefPath() {
+    return {"\$ref": "'#/components/schemas/${name}'"};
+  }
+
   String componentPath() {
     StringBuffer buffer = StringBuffer();
     String unit = "  ";

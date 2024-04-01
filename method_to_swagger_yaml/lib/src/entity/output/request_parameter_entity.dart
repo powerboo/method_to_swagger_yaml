@@ -12,6 +12,13 @@ class RequestParameterEntity {
     required this.parameterEntityList,
   });
 
+  List<Map<String, Object?>>? toMap() {
+    if (parameterEntityList.isEmpty) {
+      return null;
+    }
+    return parameterEntityList.map((e) => e.toMap()).toList();
+  }
+
   String dump() {
     final StringBuffer buffer = StringBuffer();
 
@@ -23,9 +30,11 @@ class RequestParameterEntity {
       for (final pEntity in parameterEntityList) {
         buffer.writeln("${base}${unit}- name: ${pEntity.name}");
         buffer.writeln("${base}${unit}${unit}in: ${pEntity.inValue}");
-        buffer.writeln("${base}${unit}${unit}required: ${pEntity.requiredValue.toString()}");
+        buffer.writeln(
+            "${base}${unit}${unit}required: ${pEntity.requiredValue.toString()}");
         buffer.writeln("${base}${unit}${unit}schema:");
-        buffer.write("${base}${unit}${unit}${pEntity.componentEntity.dumpTypeOrObject()}");
+        buffer.write(
+            "${base}${unit}${unit}${pEntity.componentEntity.dumpTypeOrObject()}");
       }
     }
 

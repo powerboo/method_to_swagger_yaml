@@ -24,6 +24,10 @@ class ResponseEntity {
     required this.listOfBodyContent,
   });
 
+  Map<String, Object?> toMap() {
+    return {};
+  }
+
   String dump() {
     StringBuffer buffer = StringBuffer();
     final String base = "      ";

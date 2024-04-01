@@ -22,8 +22,25 @@ class ObjectNode {
     this.jsonSerializableAnnotation,
   });
 
+  Map<String, Object?> toMap() {
+    final Map<String, Object?> m = {};
+    if (!isObject) {
+      m.addAll({"type": type});
+      return m;
+    }
+
+    m.addAll({"type": "object"});
+    final Map<String, Object?> om = {};
+    for (final o in objectNodeList) {
+      om.addAll(o.toMap());
+    }
+    m.addAll({"properties": om});
+    return m;
+  }
+
   bool get isObject {
-    final typeName = parameterElement.type.getDisplayString(withNullability: false);
+    final typeName =
+        parameterElement.type.getDisplayString(withNullability: false);
     return !_isPrimitiveType(typeName);
   }
 
@@ -113,7 +130,8 @@ class ObjectNode {
         for (int count = 1; count <= rank; count++) {
           buffer.write(unit);
         }
-        buffer.writeln("${unit}${unit}${unit}${unit}${unit}type: ${div.toStringValue}");
+        buffer.writeln(
+            "${unit}${unit}${unit}${unit}${unit}type: ${div.toStringValue}");
       }
     }
 
@@ -154,7 +172,8 @@ void recursiveNode(
   String? jsonKey = null;
   final fields = el.children.where((e) => e.kind == ElementKind.FIELD);
   for (final f in fields) {
-    final target = f.metadata.where((m) => m.element?.enclosingElement?.name == 'JsonKey');
+    final target =
+        f.metadata.where((m) => m.element?.enclosingElement?.name == 'JsonKey');
     if (target.isEmpty) {
       continue;
     }
@@ -170,7 +189,8 @@ void recursiveNode(
     jsonKey = name;
   }
 
-  final typeName = parameterElement.type.getDisplayString(withNullability: false);
+  final typeName =
+      parameterElement.type.getDisplayString(withNullability: false);
 
   // end node
   if (_isPrimitiveType(typeName)) {
@@ -242,12 +262,16 @@ bool _isPrimitiveType(String? typeName) {
 extension KebabCase on String {
   String toKebabCase() {
     final regExp = RegExp(r'(?<=[a-z])[A-Z]');
-    return replaceAllMapped(regExp, (Match match) => '-${match.group(0)!.toLowerCase()}').toLowerCase();
+    return replaceAllMapped(
+            regExp, (Match match) => '-${match.group(0)!.toLowerCase()}')
+        .toLowerCase();
   }
 
   String toSnakeCase() {
     final regExp = RegExp(r'(?<=[a-z])[A-Z]');
-    return replaceAllMapped(regExp, (Match match) => '_${match.group(0)!.toLowerCase()}').toLowerCase();
+    return replaceAllMapped(
+            regExp, (Match match) => '_${match.group(0)!.toLowerCase()}')
+        .toLowerCase();
   }
 }
 
@@ -265,7 +289,8 @@ enum JsonTypeDiv {
   factory JsonTypeDiv.from({
     required String value,
   }) {
-    final indexEnum = JsonTypeDiv.values.firstWhere((e) => e.toStringValue == value);
+    final indexEnum =
+        JsonTypeDiv.values.firstWhere((e) => e.toStringValue == value);
     return indexEnum;
   }
 }

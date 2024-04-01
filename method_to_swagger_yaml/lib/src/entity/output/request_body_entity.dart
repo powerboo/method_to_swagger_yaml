@@ -19,8 +19,13 @@ class RequestBodyEntity {
     this.requestBodyRequired = false,
   }) {
     if (listOfContent.isEmpty) {
-      throw InvalidGenerationSourceError("request body must contain at least one content.");
+      throw InvalidGenerationSourceError(
+          "request body must contain at least one content.");
     }
+  }
+
+  Map<String, Object?> toMap() {
+    return {};
   }
 
   String dump() {
