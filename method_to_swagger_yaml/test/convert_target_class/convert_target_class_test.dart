@@ -154,7 +154,8 @@ Future<void> _test({
     className,
   );
 
-  final expectedPath = p.join('test', 'convert_target_class', 'expected', '${fileName}.yaml');
+  final expectedPath =
+      p.join('test', 'convert_target_class', 'expected', '${fileName}.yaml');
   final expectedValue = File(expectedPath).readAsStringSync();
 
   expect(createdValue, expectedValue);

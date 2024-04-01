@@ -1,6 +1,6 @@
-import 'package:method_to_swagger_yaml/src/entity/output/request_body_entity.dart';
-import 'package:method_to_swagger_yaml/src/entity/output/request_parameter_entity.dart';
-import 'package:method_to_swagger_yaml/src/entity/output/response_entity.dart';
+import 'package:method_to_swagger_yaml/src/entity/section/paths_section/body/request_body_section.dart';
+import 'package:method_to_swagger_yaml/src/entity/section/paths_section/body/request_parameter_section.dart';
+import 'package:method_to_swagger_yaml/src/entity/section/paths_section/body/response_section.dart';
 import 'package:method_to_swagger_yaml_annotation/method_to_swagger_yaml_annotation.dart';
 
 class PathEntity {
@@ -9,10 +9,11 @@ class PathEntity {
   final String? summary;
   final String? description;
   final String operationId;
-  final RequestBodyEntity? requestBodyEntity;
-  final ResponseEntity responseEntity;
-  final RequestParameterEntity? requestParameterEntity;
   final List<String> tagList;
+
+  final RequestBodySection? requestBodySection;
+  final RequestParameterSection? requestParameterSection;
+  final ResponseSection responseSection;
 
   PathEntity({
     required this.path,
@@ -20,89 +21,26 @@ class PathEntity {
     required this.operationId,
     required this.summary,
     required this.description,
-    required this.requestBodyEntity,
-    required this.responseEntity,
-    required this.requestParameterEntity,
     required this.tagList,
+    required this.requestBodySection,
+    required this.requestParameterSection,
+    required this.responseSection,
   }) {}
 
-  String _postDump() {
-    StringBuffer buffer = StringBuffer();
-    const String base = "    ";
-    const String unit = "  ";
-    buffer.writeln("${base}post:");
-    buffer.writeln("${base}${unit}operationId: ${operationId}");
-
-    if (tagList.isNotEmpty) {
-      buffer.writeln("${base}${unit}tags:");
-      for (final tag in tagList) {
-        buffer.writeln("${base}${unit}${unit}- ${tag}");
+  Map<String, Object?> toMap() {
+    final Map<String, Object?> m = {};
+    if (requestBodySection != null) {
+      final p = requestBodySection!.toMap();
+      if (p != null) {
+        m.addAll({"requestBody": p});
       }
     }
-
-    if (requestParameterEntity != null) {
-      buffer.write(requestParameterEntity!.dump());
+    if (requestParameterSection != null) {
+      final p = requestParameterSection!.toMap();
+      m.addAll({"parameters": p});
     }
-
-    if (requestBodyEntity != null) {
-      buffer.write(requestBodyEntity!.dump());
-    }
-
-    buffer.write(responseEntity.dump());
-
-    return buffer.toString();
-  }
-
-  String _getDump() {
-    StringBuffer buffer = StringBuffer();
-    const String base = "    ";
-    const String unit = "  ";
-    buffer.writeln("${base}get:");
-    buffer.writeln("${base}${unit}operationId: ${operationId}");
-
-    if (tagList.isNotEmpty) {
-      buffer.writeln("${base}${unit}tags:");
-      for (final tag in tagList) {
-        buffer.writeln("${base}${unit}${unit}- ${tag}");
-      }
-    }
-
-    if (requestParameterEntity != null) {
-      buffer.write(requestParameterEntity!.dump());
-    }
-
-    if (requestBodyEntity != null) {
-      buffer.write(requestBodyEntity!.dump());
-    }
-
-    buffer.write(responseEntity.dump());
-
-    return buffer.toString();
-  }
-
-  String _deleteDump() {
-    return '''
-''';
-  }
-
-  WithMap dumpPath() {
-    switch (httpMethodDiv) {
-      case HttpMethodDiv.delete:
-        return WithMap(body: _deleteDump(), path: path);
-      case HttpMethodDiv.get:
-        return WithMap(body: _getDump(), path: path);
-      case HttpMethodDiv.patch:
-        throw PathEntityException("un implements HttpMethodDiv.patch");
-      case HttpMethodDiv.post:
-        return WithMap(body: _postDump(), path: path);
-      case HttpMethodDiv.put:
-        throw PathEntityException("un implements HttpMethodDiv.put");
-      default:
-        throw PathEntityException("un supported HttpMethodDiv.");
-    }
-
-    // ignore: dead_code
-    throw PathEntityException("implements fail.");
+    m.addAll({"responses": responseSection.toMap()});
+    return m;
   }
 }
 

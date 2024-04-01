@@ -1,12 +1,21 @@
+targets:
+  $default:
+    builders:
+      method_to_swagger_yaml|swaggerYamlBuilder:
+        enabled: true
+        generate_for:
+          include:
+            - 'lib/src/test_data/*'
+            - 'lib/src/test_data/**/*'
 builders:
   method_to_swagger_yaml|swaggerYamlBuilder:
     defaults:
       options:
         build_extensions:
-          "^lib/{{dir}}/{{file}}.dart": "lib/{{dir}}/{{file}}.yaml.dart"
-    import: "package:method_to_swagger_yaml/method_to_swagger_yaml.dart"
-    builder_factories: ["swaggerYamlBuilder"]
-    build_extensions: { ".dart": [".yaml.dart"] }
+          '^lib/{{dir}}/{{file}}.dart': 'lib/{{dir}}/{{file}}.yaml.dart'
+    import: 'package:method_to_swagger_yaml/method_to_swagger_yaml.dart'
+    builder_factories: ['swaggerYamlBuilder']
+    build_extensions: { '.dart': ['.yaml.dart'] }
     auto_apply: dependents
     build_to: source
-    applies_builders: ["source_gen|combining_builder"]
+    applies_builders: ['source_gen|combining_builder']

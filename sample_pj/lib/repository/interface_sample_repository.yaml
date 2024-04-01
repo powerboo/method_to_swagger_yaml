@@ -1,47 +1,69 @@
 openapi: 3.0.0
-info:
+info: 
   title: sample.
   version: 0.0.1
-paths:
-  /sample-path:
-    get:
+paths: 
+  /sample-path: 
+    get: 
       operationId: getMethod
-      parameters:
+      parameters: 
         - name: namedStringValue
           in: query
+          description: parameter description.
           required: true
-          schema:
-            type: string
+          explode: false
+          schema: 
+            $ref: '#/components/schemas/GetMethodNamedStringValue'
         - name: namedClassValue
           in: query
+          description: parameter description.
           required: true
-          schema:
+          explode: false
+          schema: 
             $ref: '#/components/schemas/GetMethodNamedClassValue'
         - name: requiredNamedNullableClassValue
           in: query
-          required: false
-          schema:
+          description: parameter description.
+          required: true
+          explode: false
+          schema: 
             $ref: '#/components/schemas/GetMethodRequiredNamedNullableClassValue'
-      responses:
-        '200':
-          description: Successful operation
-components:
-  schemas:
-    GetGetMethodNamedStringValue:
+        - name: freezedClass
+          in: query
+          description: parameter description.
+          required: true
+          explode: false
+          schema: 
+            $ref: '#/components/schemas/GetMethodFreezedClass'
+      responses: 
+        '200': 
+          description: Successful operation.
+        '400': 
+          description: operation failure.
+components: 
+  schemas: 
+    GetMethodNamedStringValue: 
       type: string
-    GetMethodNamedClassValue:
+    GetMethodNamedClassValue: 
       type: object
-      properties:
-        namedClassValue:
-          type: object
-          properties:
-            value:
-              type: string
-    GetMethodRequiredNamedNullableClassValue:
+      properties: 
+        value: 
+          type: string
+    GetMethodRequiredNamedNullableClassValue: 
       type: object
-      properties:
-        requiredNamedNullableClassValue:
+      properties: 
+        value: 
+          type: string
+    GetMethodFreezedClass: 
+      type: object
+      properties: 
+        freezedId: 
           type: object
-          properties:
-            value:
+          properties: 
+            freezedId: 
               type: string
+        freezedValue: 
+          type: object
+          properties: 
+            value: 
+              type: number

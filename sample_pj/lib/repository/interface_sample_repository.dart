@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:method_to_swagger_yaml_annotation/method_to_swagger_yaml_annotation.dart';
+import 'package:sample_pj/repository/object/freezed_class.dart';
 
 @ConvertTargetClass(
   title: "sample.",
@@ -15,6 +16,7 @@ abstract interface class NamedArgument {
     @RequestParameter() String namedStringValue,
     ClassValue namedClassValue,
     required ClassValue? requiredNamedNullableClassValue,
+    required FreezedClass freezedClass,
   });
 }
 

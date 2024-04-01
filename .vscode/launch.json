@@ -28,7 +28,7 @@
       "flutterMode": "release"
     },
     {
-      "name": "sample_pj",
+      "name": "sample_pj(build runner)",
       "cwd": "sample_pj",
       "request": "launch",
       "type": "dart",

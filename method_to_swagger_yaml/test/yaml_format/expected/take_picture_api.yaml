@@ -1,0 +1,60 @@
+openapi: 3.0.0
+info: 
+  title: title 
+  version: 0.0.1 
+paths: 
+  /target-picture/:pictureId: 
+    get: 
+      operationId: find 
+      parameters: 
+        - name: pictureId 
+          in: query 
+          required: true 
+          schema: 
+            $ref: '#/components/schemas/FindPictureId' 
+      responses: 
+        '200': 
+          description: Successful operation 
+  /target-picture: 
+    get: 
+      operationId: all 
+      parameters: 
+        - name: cursor 
+          in: query 
+          required: true 
+          schema: 
+            type: integer 
+        - name: length 
+          in: query 
+          required: true 
+          schema: 
+            type: integer 
+      responses: 
+        '200': 
+          description: Successful operation 
+          content: 
+            application/json: 
+              schema: 
+                type: integer 
+    post: 
+      operationId: save 
+      responses: 
+        '200': 
+          description: Successful operation 
+components: 
+  schemas: 
+    FindPictureId: 
+      type: object 
+      properties: 
+        pictureId: 
+          type: object 
+          properties: 
+            value: 
+              type: string 
+            pictureKind: 
+              type: integer 
+              enum: [0, 1] 
+    AllCursor: 
+      type: integer 
+    AllLength: 
+      type: integer 
