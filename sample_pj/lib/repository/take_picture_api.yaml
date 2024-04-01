@@ -1,190 +1,165 @@
 openapi: 3.0.0
-info:
+info: 
   title: title
   version: 0.0.1
-paths:
-  /target-picture/:pictureId:
-    get:
+paths: 
+  /target-picture/:pictureId: 
+    get: 
       operationId: find
-      parameters:
+      parameters: 
         - name: pictureId
           in: path
           description: parameter description.
           required: true
           explode: false
-          schema:
+          schema: 
             $ref: '#/components/schemas/FindPictureId'
-      responses:
-        '200':
+      responses: 
+        '200': 
           description: Successful operation.
-          content:
-            application/json:
-              schema:
+          content: 
+            application/json: 
+              schema: 
                 $ref: '#/components/schemas/FindReturn'
-        '400':
+        '400': 
           description: operation failure.
-    delete:
+    delete: 
       operationId: delete
-      parameters:
+      parameters: 
         - name: pictureId
           in: query
           description: parameter description.
           required: true
           explode: false
-          schema:
+          schema: 
             $ref: '#/components/schemas/DeletePictureId'
-      responses:
-        '200':
+      responses: 
+        '200': 
           description: Successful operation.
-        '400':
+        '400': 
           description: operation failure.
-  /target-picture:
-    get:
+  /target-picture: 
+    get: 
       operationId: all
-      parameters:
+      parameters: 
         - name: cursor
           in: query
           description: parameter description.
           required: true
           explode: false
-          schema:
+          schema: 
             $ref: '#/components/schemas/AllCursor'
         - name: length
           in: query
           description: parameter description.
           required: true
           explode: false
-          schema:
+          schema: 
             $ref: '#/components/schemas/AllLength'
-      responses:
-        '200':
+      responses: 
+        '200': 
           description: Successful operation.
-          content:
-            application/json:
-              schema:
+          content: 
+            application/json: 
+              schema: 
                 $ref: '#/components/schemas/AllReturn'
-        '400':
+        '400': 
           description: operation failure.
-    post:
+    post: 
       operationId: save
       parameters: []
-      requestBody:
+      requestBody: 
         description: Successful operation
         required: false
-        content:
-          application/json:
-            schema:
+        content: 
+          application/json: 
+            schema: 
               $ref: '#/components/schemas/SaveTargetPicture'
-      responses:
-        '200':
+      responses: 
+        '200': 
           description: Successful operation.
-        '400':
+        '400': 
           description: operation failure.
-components:
-  schemas:
-    GetMethodNamedStringValue:
-      type: string
-    GetMethodNamedClassValue:
+components: 
+  schemas: 
+    FindReturn: 
       type: object
-      properties:
-        value:
-          type: string
-    GetMethodRequiredNamedNullableClassValue:
-      type: object
-      properties:
-        value:
-          type: string
-    GetMethodFreezedClass:
-      type: object
-      properties:
-        freezedId:
+      properties: 
+        pictureId: 
           type: object
-          properties:
-            freezedId:
+          properties: 
+            value: 
               type: string
-        freezedValue:
-          type: object
-          properties:
-            value:
-              type: number
-    FindReturn:
-      type: object
-      properties:
-        pictureId:
-          type: object
-          properties:
-            value:
+            pictureKind: 
               type: string
-            pictureKind:
-              type: string
-              enum:
+              enum: 
                 - original
                 - thumbnail
-        pictureName:
+        pictureName: 
           type: object
-          properties:
-            value:
+          properties: 
+            value: 
               type: string
-    FindPictureId:
+    FindPictureId: 
       type: object
-      properties:
-        value:
+      properties: 
+        value: 
           type: string
-        pictureKind:
+        pictureKind: 
           type: string
-          enum:
+          enum: 
             - original
             - thumbnail
-    AllReturn:
+    AllReturn: 
       type: object
-      properties:
-        items:
+      properties: 
+        items: 
           type: object
-          properties:
-            pictureId:
+          properties: 
+            pictureId: 
               type: object
-              properties:
-                value:
+              properties: 
+                value: 
                   type: string
-                pictureKind:
+                pictureKind: 
                   type: string
-                  enum:
+                  enum: 
                     - original
                     - thumbnail
-            pictureName:
+            pictureName: 
               type: object
-              properties:
-                value:
+              properties: 
+                value: 
                   type: string
-    AllCursor:
+    AllCursor: 
       type: number
-    AllLength:
+    AllLength: 
       type: number
-    SaveTargetPicture:
+    SaveTargetPicture: 
       type: object
-      properties:
-        pictureId:
+      properties: 
+        pictureId: 
           type: object
-          properties:
-            value:
+          properties: 
+            value: 
               type: string
-            pictureKind:
+            pictureKind: 
               type: string
-              enum:
+              enum: 
                 - original
                 - thumbnail
-        pictureName:
+        pictureName: 
           type: object
-          properties:
-            value:
+          properties: 
+            value: 
               type: string
-    DeletePictureId:
+    DeletePictureId: 
       type: object
-      properties:
-        value:
+      properties: 
+        value: 
           type: string
-        pictureKind:
+        pictureKind: 
           type: string
-          enum:
+          enum: 
             - original
             - thumbnail

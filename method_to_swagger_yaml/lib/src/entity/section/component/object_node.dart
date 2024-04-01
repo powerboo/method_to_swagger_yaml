@@ -18,29 +18,14 @@ class ObjectNode {
     if (type is DynamicType) {
       return ObjectNode.primitive(type);
     }
-    if (type is InterfaceType) {
-      if (type.isDartCoreList) {
+    if (type.isDartCoreList) {
+      if (type is InterfaceType) {
         final typeArguments = type.typeArguments;
         if (typeArguments.isNotEmpty) {
           final elementType = typeArguments.first;
           return ObjectNode._(type, {'items': ObjectNode.visit(elementType)});
         } else {
           return ObjectNode._(type, null);
-        }
-      } else {
-        final element = type.element;
-        if (element is ClassElement) {
-          final fields = <String, ObjectNode>{};
-          // TODO:実装   @JsonKey(ignore: true)だったら含めない
-          for (final field in element.fields) {
-            if (field.name == "hashCode" ||
-                field.name == "runtimeType" ||
-                field.name == "copyWith") {
-              continue;
-            }
-            fields[field.name] = ObjectNode.visit(field.type);
-          }
-          return ObjectNode._(type, fields);
         }
       }
     } else if (type.isDartCoreBool ||
