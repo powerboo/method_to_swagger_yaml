@@ -11,7 +11,18 @@ class ObjectNode {
     return ObjectNode._(type, null);
   }
 
-  factory ObjectNode.visit(final DartType type) {
+  factory ObjectNode.visit(final DartType type, {Set<DartType>? visited}) {
+    visited ??= <DartType>{};
+
+    if (visited.contains(type)) {
+      return ObjectNode._(type, null);
+    }
+    visited.add(type);
+
+    if (type is InvalidType) {
+      return ObjectNode._(type, null);
+    }
+
     if (type is VoidType) {
       return ObjectNode.primitive(type);
     }
@@ -23,7 +34,8 @@ class ObjectNode {
         final typeArguments = type.typeArguments;
         if (typeArguments.isNotEmpty) {
           final elementType = typeArguments.first;
-          return ObjectNode._(type, {'items': ObjectNode.visit(elementType)});
+          return ObjectNode._(
+              type, {'items': ObjectNode.visit(elementType, visited: visited)});
         } else {
           return ObjectNode._(type, null);
         }
@@ -33,28 +45,29 @@ class ObjectNode {
         type.isDartCoreDouble ||
         type.isDartCoreString) {
       return ObjectNode.primitive(type);
+    } else if (type.element?.name == 'DateTime') {
+      return ObjectNode._(type, null);
     } else {
       final element = type.element;
       if (element is ClassElement) {
         final fields = <String, ObjectNode>{};
-        // TODO:実装   @JsonKey(ignore: true)だったら含めない
         for (final field in element.fields) {
           if (field.name == "hashCode" ||
               field.name == "runtimeType" ||
               field.name == "copyWith") {
             continue;
           }
-          fields[field.name] = ObjectNode.visit(field.type);
+          fields[field.name] = ObjectNode.visit(field.type, visited: visited);
         }
         for (final mixin in element.mixins) {
           for (final accessor in mixin.accessors) {
-            // TODO:実装   @JsonKey(ignore: true)だったら含めない
             if (accessor.name == "copyWith" ||
                 accessor.name == "hashCode" ||
                 accessor.name == "runtimeType") {
               continue;
             }
-            fields[accessor.name] = ObjectNode.visit(accessor.type.returnType);
+            fields[accessor.name] =
+                ObjectNode.visit(accessor.type.returnType, visited: visited);
           }
         }
         return ObjectNode._(type, fields);
@@ -64,7 +77,7 @@ class ObjectNode {
         // TypeParameterElementの場合、型パラメータの境界型を再帰的に処理する
         final boundType = element.bound;
         if (boundType != null) {
-          return ObjectNode.visit(boundType);
+          return ObjectNode.visit(boundType, visited: visited);
         } else {
           return ObjectNode._(type, null);
         }
@@ -128,7 +141,23 @@ Map<String, Object?> dartTypeToYamlType(DartType type) {
         .toList();
     return {'type': 'string', 'enum': enumValues};
   } else if (type.isDartCoreList) {
-    return {'type': 'array', 'items': ObjectNode.visit(type).toMap()};
+    final listType = type as InterfaceType;
+    if (listType.typeArguments.isNotEmpty) {
+      final elementType = listType.typeArguments.first;
+      return {
+        'type': 'array',
+        'items': elementType is DynamicType
+            ? {'type': 'object'}
+            : ObjectNode.visit(elementType).toMap(),
+      };
+    } else {
+      return {'type': 'unknown'};
+    }
+  } else if (type.element?.name == 'DateTime') {
+    return {
+      'type': 'string',
+      'format': 'date-time',
+    };
   } else {
     return {'type': 'unknown'};
   }

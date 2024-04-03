@@ -130,26 +130,4 @@ class PictureName {
 enum PictureKind {
   original,
   thumbnail;
-
-  /*
-  int get toInt {
-    switch (this) {
-      case PictureKind.original:
-        return 0;
-      case PictureKind.thumbnail:
-        return 1;
-    }
-  }
-
-  static PictureKind from(int value) {
-    switch (value) {
-      case 0:
-        return PictureKind.original;
-      case 1:
-        return PictureKind.thumbnail;
-      default:
-        throw ArgumentError('Invalid value: $value');
-    }
-  }
-  */
 }
