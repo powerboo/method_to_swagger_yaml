@@ -23,10 +23,6 @@ class ComponentSection {
     componentSectionList.clear();
   }
 
-  bool get isObject {
-    return objectNode.isObject;
-  }
-
   String get name {
     return methodName[0].toUpperCase() +
         methodName.substring(1) +
