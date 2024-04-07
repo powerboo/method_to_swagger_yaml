@@ -77,9 +77,10 @@ class ObjectNode {
         'properties': {},
       };
 
+      final allArgs = {...typeArguments, ...parentTypeArguments};
+
       for (final entry in properties.entries) {
-        final value = entry.value.toMap(
-            parentTypeArguments: {...typeArguments, ...parentTypeArguments});
+        final value = entry.value.toMap(parentTypeArguments: allArgs);
         if (value != null) {
           // Avoid adding @JsonKey properties and freezed properties
           if (entry.key.startsWith('is') ||
@@ -91,23 +92,13 @@ class ObjectNode {
             continue;
           }
           map['properties'][entry.key] = value;
-        }
-      }
-      if (typeArguments.isNotEmpty) {
-        for (final entry in typeArguments.entries) {
-          final node = _createObjectNodeForType(entry.value, {});
-          final nodeToMap = node.toMap();
-          if (nodeToMap != null) {
-            map['properties'][entry.key] = nodeToMap;
-          }
-        }
-      }
-      if (parentTypeArguments.isNotEmpty) {
-        for (final entry in parentTypeArguments.entries) {
-          final node = _createObjectNodeForType(entry.value, {});
-          final nodeToMap = node.toMap();
-          if (nodeToMap != null) {
-            map['properties'][entry.key] = nodeToMap;
+        } else {
+          for (final arg in allArgs.entries) {
+            final node = ObjectNode.visit(arg.value);
+            final nodeToMap = node.toMap();
+            if (nodeToMap != null) {
+              map['properties'][entry.key] = nodeToMap;
+            }
           }
         }
       }
