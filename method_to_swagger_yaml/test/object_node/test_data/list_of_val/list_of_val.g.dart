@@ -40,6 +40,17 @@ Map<String, dynamic> _$ValueIdToJson(ValueId instance) => <String, dynamic>{
       'value_id': instance.value,
     };
 
+_$ListOfValueImpl _$$ListOfValueImplFromJson(Map<String, dynamic> json) =>
+    _$ListOfValueImpl(
+      listOfValue: ListOfAny<ValueId>.fromJson(
+          json['listOfValue'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$ListOfValueImplToJson(_$ListOfValueImpl instance) =>
+    <String, dynamic>{
+      'listOfValue': instance.listOfValue,
+    };
+
 _$ListOfAnyImpl<Id> _$$ListOfAnyImplFromJson<Id extends InterfaceId>(
         Map<String, dynamic> json) =>
     _$ListOfAnyImpl<Id>(
@@ -52,15 +63,4 @@ Map<String, dynamic> _$$ListOfAnyImplToJson<Id extends InterfaceId>(
         _$ListOfAnyImpl<Id> instance) =>
     <String, dynamic>{
       'listOfAny': instance.listOfAny,
-    };
-
-_$ListOfValueImpl _$$ListOfValueImplFromJson(Map<String, dynamic> json) =>
-    _$ListOfValueImpl(
-      listOfValue: ListOfAny<ValueId>.fromJson(
-          json['listOfValue'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$$ListOfValueImplToJson(_$ListOfValueImpl instance) =>
-    <String, dynamic>{
-      'listOfValue': instance.listOfValue,
     };

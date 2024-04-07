@@ -1,4 +1,6 @@
+import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:source_gen/source_gen.dart';
 
 class ObjectNode {
   final DartType type;
@@ -62,6 +64,28 @@ class ObjectNode {
       return {'type': 'boolean'};
     } else if (type.isDartCoreDouble) {
       return {'type': 'number'};
+    } else if (type.element is EnumElement) {
+      final enumElement = type.element as EnumElement;
+      final enumValues =
+          enumElement.fields.where((e) => e.isEnumConstant).toList();
+
+      final Map<String, int> enumValuesWithArguments = {};
+      for (final field in enumValues) {
+        final constantValue = field.computeConstantValue();
+        final reader = ConstantReader(constantValue);
+        enumValuesWithArguments[field.name] =
+            reader.objectValue.getField('index')?.toIntValue() ?? 0;
+      }
+
+      List<int> result = [];
+      for (final e in enumValuesWithArguments.values) {
+        result.add(e);
+      }
+
+      return {
+        'type': 'integer',
+        'enum': result,
+      };
     } else if (type is ParameterizedType && type.isDartCoreList) {
       return {
         'type': 'array',
@@ -147,6 +171,8 @@ ObjectNode _createObjectNodeForType(
       type.isDartCoreBool ||
       type.isDartCoreInt ||
       type.isDartCoreDouble) {
+    return ObjectNode._(type, {});
+  } else if (type.element is EnumElement) {
     return ObjectNode._(type, {});
   } else if (type is ParameterizedType && type.isDartCoreList) {
     final itemType = type.typeArguments.first;

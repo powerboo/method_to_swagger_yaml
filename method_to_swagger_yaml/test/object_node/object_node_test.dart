@@ -89,7 +89,7 @@ void main() {
             "type": "array",
             "items": {"type": "string"}
           },
-          "dateTime": {"type": "string", "format": "date-time"}
+          "date_time": {"type": "string", "format": "date-time"}
         }
       });
     });
@@ -234,7 +234,7 @@ void main() {
       expect(objectNode.toMap(), {
         "type": "object",
         "properties": {
-          "freezedId": {"type": "string"},
+          "freezed_id": {"type": "string"},
         }
       });
     });
@@ -278,13 +278,13 @@ void main() {
       expect(objectNode.toMap(), {
         "type": "object",
         "properties": {
-          "freezedId": {
+          "freezed_id": {
             "type": "object",
             "properties": {
-              "freezedId": {"type": "string"}
+              "freezed_id": {"type": "string"}
             }
           },
-          "freezedValue": {
+          "freezed_value": {
             "type": "object",
             "properties": {
               "value": {"type": "integer"}
@@ -369,7 +369,7 @@ void main() {
           "name": {
             "type": "string",
           },
-          "targetList": {
+          "target_list": {
             "type": "array",
             "items": {
               "type": "object",
@@ -416,24 +416,90 @@ void main() {
       expect(objectNode.toMap(), {
         "type": "object",
         "properties": {
-          "listOfValue": {
+          "list_of_value": {
             'type': 'object',
             'properties': {
-              "listOfAny": {
+              "list_of_any": {
                 "type": "array",
                 "items": {
                   "type": "object",
                   "properties": {
-                    'sortNum': {
+                    'sort_num': {
                       'type': 'object',
                       'properties': {
                         'value': {'type': 'integer'}
                       }
                     },
-                    "sortKey": {
+                    "sort_key": {
                       "type": "object",
                       "properties": {
                         "value": {"type": "string"}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      });
+    });
+    test('sort key with enum(int) object json', () async {
+      final List<String> filePaths = [
+        'test/object_node/test_data/list_of_val_key_with_enum/list_of_val.dart',
+        'test/object_node/test_data/list_of_val_key_with_enum/list_of_val.freezed.dart',
+        'test/object_node/test_data/list_of_val_key_with_enum/list_of_val.g.dart',
+      ];
+      final Map<String, String> resolveSourceMap = {};
+      for (final filePath in filePaths) {
+        resolveSourceMap["main|$filePath"] = File(filePath).readAsStringSync();
+      }
+
+      final main = await resolveSources(resolveSourceMap, (Resolver resolver) {
+        return resolver.libraries.toList();
+      });
+
+      final els = main.map((e) => e.getClass("ListOfValue"));
+
+      ObjectNode? objectNode;
+      for (final e in els) {
+        if (e == null) {
+          continue;
+        }
+        objectNode = ObjectNode.visit(e.thisType);
+        break;
+      }
+
+      if (objectNode == null) {
+        expect(false, true);
+        return;
+      }
+
+      expect(objectNode.toMap(), {
+        "type": "object",
+        "properties": {
+          "list_of_value": {
+            'type': 'object',
+            'properties': {
+              "list_of_any": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    'sort_num': {
+                      'type': 'object',
+                      'properties': {
+                        'value': {'type': 'integer'}
+                      }
+                    },
+                    "sort_key": {
+                      "type": "object",
+                      "properties": {
+                        "value": {"type": "string"},
+                        "value_div": {
+                          "type": "integer",
+                          "enum": [0, 1]
+                        }
                       }
                     }
                   }

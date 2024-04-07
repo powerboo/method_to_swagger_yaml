@@ -14,154 +14,6 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-ListOfAny<Id> _$ListOfAnyFromJson<Id extends InterfaceId>(
-    Map<String, dynamic> json) {
-  return _ListOfAny<Id>.fromJson(json);
-}
-
-/// @nodoc
-mixin _$ListOfAny<Id extends InterfaceId> {
-  List<BaseSort<Id>> get listOfAny => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $ListOfAnyCopyWith<Id, ListOfAny<Id>> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ListOfAnyCopyWith<Id extends InterfaceId, $Res> {
-  factory $ListOfAnyCopyWith(
-          ListOfAny<Id> value, $Res Function(ListOfAny<Id>) then) =
-      _$ListOfAnyCopyWithImpl<Id, $Res, ListOfAny<Id>>;
-  @useResult
-  $Res call({List<BaseSort<Id>> listOfAny});
-}
-
-/// @nodoc
-class _$ListOfAnyCopyWithImpl<Id extends InterfaceId, $Res,
-    $Val extends ListOfAny<Id>> implements $ListOfAnyCopyWith<Id, $Res> {
-  _$ListOfAnyCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? listOfAny = null,
-  }) {
-    return _then(_value.copyWith(
-      listOfAny: null == listOfAny
-          ? _value.listOfAny
-          : listOfAny // ignore: cast_nullable_to_non_nullable
-              as List<BaseSort<Id>>,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$ListOfAnyImplCopyWith<Id extends InterfaceId, $Res>
-    implements $ListOfAnyCopyWith<Id, $Res> {
-  factory _$$ListOfAnyImplCopyWith(
-          _$ListOfAnyImpl<Id> value, $Res Function(_$ListOfAnyImpl<Id>) then) =
-      __$$ListOfAnyImplCopyWithImpl<Id, $Res>;
-  @override
-  @useResult
-  $Res call({List<BaseSort<Id>> listOfAny});
-}
-
-/// @nodoc
-class __$$ListOfAnyImplCopyWithImpl<Id extends InterfaceId, $Res>
-    extends _$ListOfAnyCopyWithImpl<Id, $Res, _$ListOfAnyImpl<Id>>
-    implements _$$ListOfAnyImplCopyWith<Id, $Res> {
-  __$$ListOfAnyImplCopyWithImpl(
-      _$ListOfAnyImpl<Id> _value, $Res Function(_$ListOfAnyImpl<Id>) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? listOfAny = null,
-  }) {
-    return _then(_$ListOfAnyImpl<Id>(
-      listOfAny: null == listOfAny
-          ? _value._listOfAny
-          : listOfAny // ignore: cast_nullable_to_non_nullable
-              as List<BaseSort<Id>>,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$ListOfAnyImpl<Id extends InterfaceId> extends _ListOfAny<Id> {
-  const _$ListOfAnyImpl({required final List<BaseSort<Id>> listOfAny})
-      : _listOfAny = listOfAny,
-        super._();
-
-  factory _$ListOfAnyImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ListOfAnyImplFromJson(json);
-
-  final List<BaseSort<Id>> _listOfAny;
-  @override
-  List<BaseSort<Id>> get listOfAny {
-    if (_listOfAny is EqualUnmodifiableListView) return _listOfAny;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_listOfAny);
-  }
-
-  @override
-  String toString() {
-    return 'ListOfAny<$Id>(listOfAny: $listOfAny)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ListOfAnyImpl<Id> &&
-            const DeepCollectionEquality()
-                .equals(other._listOfAny, _listOfAny));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_listOfAny));
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ListOfAnyImplCopyWith<Id, _$ListOfAnyImpl<Id>> get copyWith =>
-      __$$ListOfAnyImplCopyWithImpl<Id, _$ListOfAnyImpl<Id>>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ListOfAnyImplToJson<Id>(
-      this,
-    );
-  }
-}
-
-abstract class _ListOfAny<Id extends InterfaceId> extends ListOfAny<Id> {
-  const factory _ListOfAny({required final List<BaseSort<Id>> listOfAny}) =
-      _$ListOfAnyImpl<Id>;
-  const _ListOfAny._() : super._();
-
-  factory _ListOfAny.fromJson(Map<String, dynamic> json) =
-      _$ListOfAnyImpl<Id>.fromJson;
-
-  @override
-  List<BaseSort<Id>> get listOfAny;
-  @override
-  @JsonKey(ignore: true)
-  _$$ListOfAnyImplCopyWith<Id, _$ListOfAnyImpl<Id>> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
 ListOfValue _$ListOfValueFromJson(Map<String, dynamic> json) {
   return _ListOfValue.fromJson(json);
 }
@@ -311,5 +163,153 @@ abstract class _ListOfValue extends ListOfValue {
   @override
   @JsonKey(ignore: true)
   _$$ListOfValueImplCopyWith<_$ListOfValueImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+ListOfAny<Id> _$ListOfAnyFromJson<Id extends InterfaceId>(
+    Map<String, dynamic> json) {
+  return _ListOfAny<Id>.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ListOfAny<Id extends InterfaceId> {
+  List<BaseSort<Id>> get listOfAny => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ListOfAnyCopyWith<Id, ListOfAny<Id>> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ListOfAnyCopyWith<Id extends InterfaceId, $Res> {
+  factory $ListOfAnyCopyWith(
+          ListOfAny<Id> value, $Res Function(ListOfAny<Id>) then) =
+      _$ListOfAnyCopyWithImpl<Id, $Res, ListOfAny<Id>>;
+  @useResult
+  $Res call({List<BaseSort<Id>> listOfAny});
+}
+
+/// @nodoc
+class _$ListOfAnyCopyWithImpl<Id extends InterfaceId, $Res,
+    $Val extends ListOfAny<Id>> implements $ListOfAnyCopyWith<Id, $Res> {
+  _$ListOfAnyCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? listOfAny = null,
+  }) {
+    return _then(_value.copyWith(
+      listOfAny: null == listOfAny
+          ? _value.listOfAny
+          : listOfAny // ignore: cast_nullable_to_non_nullable
+              as List<BaseSort<Id>>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ListOfAnyImplCopyWith<Id extends InterfaceId, $Res>
+    implements $ListOfAnyCopyWith<Id, $Res> {
+  factory _$$ListOfAnyImplCopyWith(
+          _$ListOfAnyImpl<Id> value, $Res Function(_$ListOfAnyImpl<Id>) then) =
+      __$$ListOfAnyImplCopyWithImpl<Id, $Res>;
+  @override
+  @useResult
+  $Res call({List<BaseSort<Id>> listOfAny});
+}
+
+/// @nodoc
+class __$$ListOfAnyImplCopyWithImpl<Id extends InterfaceId, $Res>
+    extends _$ListOfAnyCopyWithImpl<Id, $Res, _$ListOfAnyImpl<Id>>
+    implements _$$ListOfAnyImplCopyWith<Id, $Res> {
+  __$$ListOfAnyImplCopyWithImpl(
+      _$ListOfAnyImpl<Id> _value, $Res Function(_$ListOfAnyImpl<Id>) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? listOfAny = null,
+  }) {
+    return _then(_$ListOfAnyImpl<Id>(
+      listOfAny: null == listOfAny
+          ? _value._listOfAny
+          : listOfAny // ignore: cast_nullable_to_non_nullable
+              as List<BaseSort<Id>>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ListOfAnyImpl<Id extends InterfaceId> extends _ListOfAny<Id> {
+  const _$ListOfAnyImpl({required final List<BaseSort<Id>> listOfAny})
+      : _listOfAny = listOfAny,
+        super._();
+
+  factory _$ListOfAnyImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ListOfAnyImplFromJson(json);
+
+  final List<BaseSort<Id>> _listOfAny;
+  @override
+  List<BaseSort<Id>> get listOfAny {
+    if (_listOfAny is EqualUnmodifiableListView) return _listOfAny;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_listOfAny);
+  }
+
+  @override
+  String toString() {
+    return 'ListOfAny<$Id>(listOfAny: $listOfAny)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ListOfAnyImpl<Id> &&
+            const DeepCollectionEquality()
+                .equals(other._listOfAny, _listOfAny));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_listOfAny));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ListOfAnyImplCopyWith<Id, _$ListOfAnyImpl<Id>> get copyWith =>
+      __$$ListOfAnyImplCopyWithImpl<Id, _$ListOfAnyImpl<Id>>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ListOfAnyImplToJson<Id>(
+      this,
+    );
+  }
+}
+
+abstract class _ListOfAny<Id extends InterfaceId> extends ListOfAny<Id> {
+  const factory _ListOfAny({required final List<BaseSort<Id>> listOfAny}) =
+      _$ListOfAnyImpl<Id>;
+  const _ListOfAny._() : super._();
+
+  factory _ListOfAny.fromJson(Map<String, dynamic> json) =
+      _$ListOfAnyImpl<Id>.fromJson;
+
+  @override
+  List<BaseSort<Id>> get listOfAny;
+  @override
+  @JsonKey(ignore: true)
+  _$$ListOfAnyImplCopyWith<Id, _$ListOfAnyImpl<Id>> get copyWith =>
       throw _privateConstructorUsedError;
 }
