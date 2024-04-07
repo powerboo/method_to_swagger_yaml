@@ -15,12 +15,13 @@ dependencies:
   path: '>1.0.0 <2.3.0-beta'
   yaml_writer: ^2.0.0
   yaml: ^3.1.2
+  json_serializable: ^6.7.1
 
 dev_dependencies:
   build_runner: ^2.3.3
   build_test: ^2.2.2
+  donuts_annotation: ^0.2.0
   freezed: ^2.4.7
   freezed_annotation: ^2.4.1
-  json_serializable: ^6.7.1
   source_gen_test: ^1.0.6
   test: ^1.21.0

@@ -91,13 +91,13 @@ class ObjectNode {
               entry.key == 'hashCode') {
             continue;
           }
-          map['properties'][entry.key] = value;
+          map['properties'][entry.key.toSnakeCase()] = value;
         } else {
           for (final arg in allArgs.entries) {
             final node = ObjectNode.visit(arg.value);
             final nodeToMap = node.toMap();
             if (nodeToMap != null) {
-              map['properties'][entry.key] = nodeToMap;
+              map['properties'][entry.key.toSnakeCase()] = nodeToMap;
             }
           }
         }
@@ -176,4 +176,20 @@ class ObjectNodeException implements Exception {
 
   @override
   String toString() => "[ObjectNodeException] $message";
+}
+
+extension KebabCase on String {
+  String toKebabCase() {
+    final regExp = RegExp(r'(?<=[a-z])[A-Z]');
+    return replaceAllMapped(
+            regExp, (Match match) => '-${match.group(0)!.toLowerCase()}')
+        .toLowerCase();
+  }
+
+  String toSnakeCase() {
+    final regExp = RegExp(r'(?<=[a-z])[A-Z]');
+    return replaceAllMapped(
+            regExp, (Match match) => '_${match.group(0)!.toLowerCase()}')
+        .toLowerCase();
+  }
 }
