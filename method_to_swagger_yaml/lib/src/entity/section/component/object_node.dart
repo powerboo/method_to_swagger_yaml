@@ -4,10 +4,13 @@ class ObjectNode {
   final DartType type;
   final Map<String, ObjectNode> properties;
   final ObjectNode? itemNode;
+  final Map<String, DartType> typeArguments;
 
-  ObjectNode._(this.type, this.properties, {this.itemNode});
+  ObjectNode._(this.type, this.properties,
+      {this.itemNode, this.typeArguments = const {}});
 
-  factory ObjectNode.visit(final DartType type) {
+  factory ObjectNode.visit(final DartType type,
+      {Map<String, DartType> typeArguments = const {}}) {
     final properties = <String, ObjectNode>{};
 
     if (type is InterfaceType) {
@@ -15,54 +18,27 @@ class ObjectNode {
         return ObjectNode._(type, properties);
       }
 
-      for (final field in type.element.fields) {
-        if (field.isStatic) continue;
-        if (field.name == 'hashCode') continue;
-
-        final fieldType = field.type;
-        final fieldNode = _createObjectNodeForType(fieldType);
-        properties[field.name] = fieldNode;
-      }
+      properties.addAll(_getPropertiesFromInterfaceType(type, typeArguments));
 
       // Handling for freezed classes
       if (type.element.constructors.any((c) => c.isFactory)) {
-        // クラスのプロパティを取得
-        for (final accessor in type.element.accessors) {
-          if (accessor.isGetter &&
-              !accessor.isStatic &&
-              accessor.name != 'runtimeType' &&
-              accessor.name != 'hashCode' &&
-              accessor.name != 'copyWith' &&
-              !properties.containsKey(accessor.name)) {
-            final fieldName = accessor.name;
-            final fieldNode = _createObjectNodeForType(accessor.returnType);
-            properties[fieldName] = fieldNode;
-          }
-        }
         // ミックスインのプロパティを取得
         for (final mixin in type.element.mixins) {
-          for (final accessor in mixin.accessors) {
-            if (accessor.isGetter &&
-                !accessor.isStatic &&
-                accessor.name != 'runtimeType' &&
-                accessor.name != 'hashCode' &&
-                accessor.name != 'copyWith') {
-              final fieldName = accessor.name;
-              final fieldNode = _createObjectNodeForType(accessor.returnType);
-              properties[fieldName] = fieldNode;
-            }
-          }
+          properties
+              .addAll(_getPropertiesFromInterfaceType(mixin, typeArguments));
         }
       }
     } else if (type is ParameterizedType && type.isDartCoreList) {
       final itemType = type.typeArguments.first;
-      final itemNode = _createObjectNodeForType(itemType);
+      final itemNode = _createObjectNodeForType(itemType, typeArguments);
       return ObjectNode._(type, properties, itemNode: itemNode);
     } else if (type is TypeParameterType) {
-      return ObjectNode._(type, properties);
+      final bound = type.bound;
+      final actualType = typeArguments[type.element.name] ?? bound;
+      return ObjectNode.visit(actualType, typeArguments: typeArguments);
     }
 
-    return ObjectNode._(type, properties);
+    return ObjectNode._(type, properties, typeArguments: typeArguments);
   }
 
   Map<String, dynamic>? toMap() {
@@ -88,7 +64,7 @@ class ObjectNode {
     } else if (type is ParameterizedType && type.isDartCoreList) {
       return {
         'type': 'array',
-        'items': itemNode?.toMap() ?? {'type': 'string'},
+        'items': itemNode?.toMap() ?? {'type': 'object'},
       };
     } else if (type is InterfaceType) {
       final map = <String, dynamic>{
@@ -99,20 +75,59 @@ class ObjectNode {
       for (final entry in properties.entries) {
         final value = entry.value.toMap();
         if (value != null) {
+          // Avoid adding @JsonKey properties and freezed properties
+          if (entry.key.startsWith('is') ||
+              entry.key == 'length' ||
+              entry.key == 'list' ||
+              entry.key == 'copyWith' ||
+              entry.key == 'runtimeType' ||
+              entry.key == 'hashCode') {
+            continue;
+          }
           map['properties'][entry.key] = value;
         }
       }
 
       return map;
-    } else if (type is TypeParameterType) {
-      return null;
     }
 
     return null;
   }
 }
 
-ObjectNode _createObjectNodeForType(DartType type) {
+Map<String, ObjectNode> _getPropertiesFromInterfaceType(
+    InterfaceType type, Map<String, DartType> typeArguments) {
+  final properties = <String, ObjectNode>{};
+
+  for (final field in type.element.fields) {
+    if (field.isStatic) continue;
+    if (field.name == 'hashCode') continue;
+
+    final fieldType = field.type;
+    final fieldNode = _createObjectNodeForType(fieldType, typeArguments);
+    properties[field.name] = fieldNode;
+  }
+
+  // クラスのプロパティを取得
+  for (final accessor in type.element.accessors) {
+    if (accessor.isGetter &&
+        !accessor.isStatic &&
+        accessor.name != 'runtimeType' &&
+        accessor.name != 'hashCode' &&
+        accessor.name != 'copyWith' &&
+        !properties.containsKey(accessor.name)) {
+      final fieldName = accessor.name;
+      final fieldNode =
+          _createObjectNodeForType(accessor.returnType, typeArguments);
+      properties[fieldName] = fieldNode;
+    }
+  }
+
+  return properties;
+}
+
+ObjectNode _createObjectNodeForType(
+    DartType type, Map<String, DartType> typeArguments) {
   if (type.isDartCoreString ||
       type.isDartCoreBool ||
       type.isDartCoreInt ||
@@ -120,12 +135,22 @@ ObjectNode _createObjectNodeForType(DartType type) {
     return ObjectNode._(type, {});
   } else if (type is ParameterizedType && type.isDartCoreList) {
     final itemType = type.typeArguments.first;
-    final itemNode = _createObjectNodeForType(itemType);
+    final itemNode = _createObjectNodeForType(itemType, typeArguments);
     return ObjectNode._(type, {}, itemNode: itemNode);
   } else if (type is InterfaceType) {
-    return ObjectNode.visit(type);
+    final visitedTypeArguments = {
+      for (var i = 0; i < type.typeArguments.length; i++)
+        type.element.typeParameters[i].name: type.typeArguments[i]
+    };
+    return ObjectNode.visit(type,
+        typeArguments: {...typeArguments, ...visitedTypeArguments});
   } else if (type is TypeParameterType) {
-    return ObjectNode._(type, {});
+    final actualType = typeArguments[type.element.name];
+    if (actualType != null && actualType is! TypeParameterType) {
+      return _createObjectNodeForType(actualType, typeArguments);
+    } else {
+      return ObjectNode._(type, {});
+    }
   }
   throw ObjectNodeException('Unsupported type: $type');
 }

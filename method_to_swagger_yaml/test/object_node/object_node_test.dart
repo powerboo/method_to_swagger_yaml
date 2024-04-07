@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:build/build.dart';
 import 'package:build_test/build_test.dart';
-import 'package:source_gen_test/source_gen_test.dart';
 import 'package:test/test.dart';
 import 'package:method_to_swagger_yaml/src/entity/section/component/object_node.dart';
 
@@ -210,7 +209,6 @@ void main() {
       final Map<String, String> resolveSourceMap = {};
       for (final filePath in filePaths) {
         resolveSourceMap["main|$filePath"] = File(filePath).readAsStringSync();
-        print(resolveSourceMap["main|$filePath"]);
       }
 
       final main = await resolveSources(resolveSourceMap, (Resolver resolver) {
@@ -229,6 +227,7 @@ void main() {
       }
 
       if (objectNode == null) {
+        expect(false, true);
         return;
       }
 
@@ -254,7 +253,6 @@ void main() {
       final Map<String, String> resolveSourceMap = {};
       for (final filePath in filePaths) {
         resolveSourceMap["main|$filePath"] = File(filePath).readAsStringSync();
-        print(resolveSourceMap["main|$filePath"]);
       }
 
       final main = await resolveSources(resolveSourceMap, (Resolver resolver) {
@@ -273,6 +271,7 @@ void main() {
       }
 
       if (objectNode == null) {
+        expect(false, true);
         return;
       }
 
@@ -302,7 +301,6 @@ void main() {
       final Map<String, String> resolveSourceMap = {};
       for (final filePath in filePaths) {
         resolveSourceMap["main|$filePath"] = File(filePath).readAsStringSync();
-        print(resolveSourceMap["main|$filePath"]);
       }
 
       final main = await resolveSources(resolveSourceMap, (Resolver resolver) {
@@ -321,6 +319,7 @@ void main() {
       }
 
       if (objectNode == null) {
+        expect(false, true);
         return;
       }
 
@@ -342,7 +341,6 @@ void main() {
       final Map<String, String> resolveSourceMap = {};
       for (final filePath in filePaths) {
         resolveSourceMap["main|$filePath"] = File(filePath).readAsStringSync();
-        print(resolveSourceMap["main|$filePath"]);
       }
 
       final main = await resolveSources(resolveSourceMap, (Resolver resolver) {
@@ -361,6 +359,7 @@ void main() {
       }
 
       if (objectNode == null) {
+        expect(false, true);
         return;
       }
 
@@ -376,6 +375,69 @@ void main() {
               "type": "object",
               "properties": {
                 "name": {"type": "string"}
+              }
+            }
+          }
+        }
+      });
+    });
+
+    test('object json', () async {
+      final List<String> filePaths = [
+        'test/object_node/test_data/list_of_val/list_of_val.dart',
+        'test/object_node/test_data/list_of_val/list_of_val.freezed.dart',
+        'test/object_node/test_data/list_of_val/list_of_val.g.dart',
+      ];
+      final Map<String, String> resolveSourceMap = {};
+      for (final filePath in filePaths) {
+        resolveSourceMap["main|$filePath"] = File(filePath).readAsStringSync();
+      }
+
+      final main = await resolveSources(resolveSourceMap, (Resolver resolver) {
+        return resolver.libraries.toList();
+      });
+
+      final els = main.map((e) => e.getClass("ListOfValue"));
+
+      ObjectNode? objectNode;
+      for (final e in els) {
+        if (e == null) {
+          continue;
+        }
+        objectNode = ObjectNode.visit(e.thisType);
+        break;
+      }
+
+      if (objectNode == null) {
+        expect(false, true);
+        return;
+      }
+
+      expect(objectNode.toMap(), {
+        "type": "object",
+        "properties": {
+          "listOfValue": {
+            'type': 'object',
+            'properties': {
+              "listOfAny": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    'sortNum': {
+                      'type': 'object',
+                      'properties': {
+                        'value': {'type': 'integer'}
+                      }
+                    },
+                    "sortKey": {
+                      "type": "object",
+                      "properties": {
+                        "value": {"type": "string"}
+                      }
+                    }
+                  }
+                }
               }
             }
           }
