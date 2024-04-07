@@ -15,6 +15,7 @@ class ResponseSection {
   ResponseSection({
     required this.methodElement,
     required this.returnType,
+    void Function(ComponentSection)? getComponentSection,
   }) {
     final componentSection = ComponentSection(
       returnType: returnType,
@@ -22,6 +23,9 @@ class ResponseSection {
       methodName: methodElement.name,
     );
 
+    if (getComponentSection != null) {
+      getComponentSection(componentSection);
+    }
     ComponentSection.add(componentSection);
 
     final schema = SchemaSection(

@@ -102,6 +102,20 @@ class ObjectNode {
             {'type': 'object'},
       };
     } else if (type is InterfaceType) {
+      if (type.isDartAsyncFuture ||
+          type.isDartAsyncFutureOr ||
+          type.isDartAsyncStream) {
+        final Map<String, dynamic> result = {};
+        for (final t in (type as InterfaceType).typeArguments) {
+          final node = _createObjectNodeForType(t, {...typeArguments});
+          final n = node.toMap();
+          if (n != null) {
+            result.addAll(n);
+          }
+        }
+        return result;
+      }
+
       final map = <String, dynamic>{
         'type': 'object',
         'properties': {},
@@ -189,7 +203,12 @@ Map<String, ObjectNode> _getPropertiesFromInterfaceType(
 
 ObjectNode _createObjectNodeForType(
     DartType type, Map<String, DartType> typeArguments) {
-  if (type.isDartCoreString ||
+  if (type.isDartAsyncFuture ||
+      type.isDartAsyncFutureOr ||
+      type.isDartAsyncStream) {
+    final itemNode = _createObjectNodeForType(type, typeArguments);
+    return ObjectNode._(type, {}, itemNode: itemNode);
+  } else if (type.isDartCoreString ||
       type.isDartCoreBool ||
       type.isDartCoreInt ||
       type.isDartCoreDouble) {

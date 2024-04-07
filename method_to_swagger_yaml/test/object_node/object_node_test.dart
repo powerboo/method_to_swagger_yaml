@@ -34,6 +34,7 @@ void main() {
       }
 
       if (objectNode == null) {
+        expect(true, false);
         return;
       }
 
