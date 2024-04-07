@@ -454,7 +454,7 @@ class ValueIdWithEnum implements InterfaceId {
       _$ValueIdWithEnumFromJson(json);
 
   @override
-  Map<String, Object?> toJson() => _$ValueIdToJson(this);
+  Map<String, Object?> toJson() => _$ValueIdWithEnumToJson(this);
 
   @override
   String toString() {

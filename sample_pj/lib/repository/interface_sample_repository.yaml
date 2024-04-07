@@ -42,87 +42,6 @@ paths:
           description: operation failure.
 components: 
   schemas: 
-    FindReturn: 
-      type: object
-      properties: 
-        pictureId: 
-          type: object
-          properties: 
-            value: 
-              type: string
-            pictureKind: 
-              type: string
-              enum: 
-                - original
-                - thumbnail
-        pictureName: 
-          type: object
-          properties: 
-            value: 
-              type: string
-    FindPictureId: 
-      type: object
-      properties: 
-        value: 
-          type: string
-        pictureKind: 
-          type: string
-          enum: 
-            - original
-            - thumbnail
-    AllReturn: 
-      type: object
-      properties: 
-        items: 
-          type: object
-          properties: 
-            pictureId: 
-              type: object
-              properties: 
-                value: 
-                  type: string
-                pictureKind: 
-                  type: string
-                  enum: 
-                    - original
-                    - thumbnail
-            pictureName: 
-              type: object
-              properties: 
-                value: 
-                  type: string
-    AllCursor: 
-      type: number
-    AllLength: 
-      type: number
-    SaveTargetPicture: 
-      type: object
-      properties: 
-        pictureId: 
-          type: object
-          properties: 
-            value: 
-              type: string
-            pictureKind: 
-              type: string
-              enum: 
-                - original
-                - thumbnail
-        pictureName: 
-          type: object
-          properties: 
-            value: 
-              type: string
-    DeletePictureId: 
-      type: object
-      properties: 
-        value: 
-          type: string
-        pictureKind: 
-          type: string
-          enum: 
-            - original
-            - thumbnail
     GetMethodNamedStringValue: 
       type: string
     GetMethodNamedClassValue: 
@@ -138,13 +57,13 @@ components:
     GetMethodFreezedClass: 
       type: object
       properties: 
-        freezedId: 
+        freezed_id: 
           type: object
           properties: 
-            freezedId: 
+            freezed_id: 
               type: string
-        freezedValue: 
+        freezed_value: 
           type: object
           properties: 
             value: 
-              type: number
+              type: integer

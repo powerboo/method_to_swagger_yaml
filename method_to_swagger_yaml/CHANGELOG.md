@@ -1,3 +1,7 @@
+## 0.0.7
+
+support enum
+
 ## 0.0.6
 
 use yaml writer.

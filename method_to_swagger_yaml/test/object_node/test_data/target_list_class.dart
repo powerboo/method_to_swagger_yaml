@@ -7,10 +7,6 @@ class TargetListClass with _$TargetListClass {
   const TargetListClass._();
   const factory TargetListClass({
     required String name,
-    @JsonKey(
-      includeFromJson: false,
-      includeToJson: false,
-    )
     required List<ITargetListClass> targetList,
   }) = _TargetListClass;
 }

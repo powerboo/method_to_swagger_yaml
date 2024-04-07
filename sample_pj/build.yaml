@@ -1,0 +1,115 @@
+targets:
+  $default:
+    builders:
+      # ------------------------------------------------------------
+      # factory
+      # ------------------------------------------------------------
+      donuts|abstractInterfaceFactoryBuilder:
+        enabled: true
+        generate_for:
+          include:
+            - "lib/domain/*"
+            - "lib/domain/**/*"
+      donuts|factoryImplBuilder:
+        enabled: true
+        generate_for:
+          include:
+            - "lib/domain/*"
+            - "lib/domain/**/*"
+      donuts|factoryProviderBuilder:
+        enabled: true
+        generate_for:
+          include:
+            - "lib/domain/*"
+            - "lib/domain/**/*"
+      # ------------------------------------------------------------
+      # repository
+      # ------------------------------------------------------------
+      donuts|abstractInterfaceRepositoryBuilder:
+        enabled: true
+        generate_for:
+          include:
+            - "lib/domain/*"
+            - "lib/domain/**/*"
+      donuts|repositoryImplBuilder:
+        enabled: true
+        generate_for:
+          include:
+            - "lib/domain/*"
+            - "lib/domain/**/*"
+      donuts|inMemoryRepositoryImplBuilder:
+        enabled: true
+        generate_for:
+          include:
+            - "lib/domain/*"
+            - "lib/domain/**/*"
+      donuts|repositoryProviderBuilder:
+        enabled: true
+        generate_for:
+          include:
+            - "lib/domain/*"
+            - "lib/domain/**/*"
+      donuts|abstractInterfaceApiBuilder:
+        enabled: true
+        generate_for:
+          include:
+            - "lib/domain/*"
+            - "lib/domain/**/*"
+
+      # ------------------------------------------------------------
+      # application service
+      # ------------------------------------------------------------
+      donuts|abstractInterfaceApplicationServiceBuilder:
+        enabled: true
+        generate_for:
+          include:
+            - "lib/domain/*"
+            - "lib/domain/**/*"
+      donuts|applicationServiceImplBuilder:
+        enabled: true
+        generate_for:
+          include:
+            - "lib/domain/*"
+            - "lib/domain/**/*"
+      donuts|applicationServiceProviderBuilder:
+        enabled: true
+        generate_for:
+          include:
+            - "lib/domain/*"
+            - "lib/domain/**/*"
+      # ------------------------------------------------------------
+      # state
+      # ------------------------------------------------------------
+      donuts|listStateBuilder:
+        enabled: true
+        generate_for:
+          include:
+            - "lib/domain/*"
+            - "lib/domain/**/*"
+      donuts|singleStateBuilder:
+        enabled: true
+        generate_for:
+          include:
+            - "lib/domain/*"
+            - "lib/domain/**/*"
+      # ------------------------------------------------------------
+      # view
+      # ------------------------------------------------------------
+      donuts|listViewBuilder:
+        enabled: true
+        generate_for:
+          include:
+            - "lib/domain/*"
+            - "lib/domain/**/*"
+      donuts|detailViewBuilder:
+        enabled: true
+        generate_for:
+          include:
+            - "lib/domain/*"
+            - "lib/domain/**/*"
+      donuts|createModalBuilder:
+        enabled: true
+        generate_for:
+          include:
+            - "lib/domain/*"
+            - "lib/domain/**/*"
