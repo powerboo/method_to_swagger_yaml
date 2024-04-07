@@ -45,8 +45,9 @@ void main() {
           "hobbies": {
             "type": "array",
             "items": {"type": "string"}
-          }
-        }
+          },
+        },
+        "required": ["age", "hobbies", "name"],
       });
     });
     test('Complex type Include DateTime', () async {
@@ -90,7 +91,8 @@ void main() {
             "items": {"type": "string"}
           },
           "date_time": {"type": "string", "format": "date-time"}
-        }
+        },
+        "required": ["age", "date_time", "hobbies", "name"],
       });
     });
     test('String type', () async {
@@ -233,6 +235,7 @@ void main() {
 
       expect(objectNode.toMap(), {
         "type": "object",
+        "required": ["freezed_id"],
         "properties": {
           "freezed_id": {"type": "string"},
         }
@@ -277,15 +280,18 @@ void main() {
 
       expect(objectNode.toMap(), {
         "type": "object",
+        "required": ["freezed_id", "freezed_value"],
         "properties": {
           "freezed_id": {
             "type": "object",
+            "required": ["freezed_id"],
             "properties": {
               "freezed_id": {"type": "string"}
             }
           },
           "freezed_value": {
             "type": "object",
+            "required": ["value"],
             "properties": {
               "value": {"type": "integer"}
             }
@@ -325,6 +331,7 @@ void main() {
 
       expect(objectNode.toMap(), {
         "type": "object",
+        "required": ["value"],
         "properties": {
           "value": {
             "type": "string",
@@ -365,6 +372,7 @@ void main() {
 
       expect(objectNode.toMap(), {
         "type": "object",
+        "required": ["name", "target_list"],
         "properties": {
           "name": {
             "type": "string",
@@ -373,6 +381,7 @@ void main() {
             "type": "array",
             "items": {
               "type": "object",
+              "required": ["name"],
               "properties": {
                 "name": {"type": "string"}
               }
@@ -415,25 +424,30 @@ void main() {
 
       expect(objectNode.toMap(), {
         "type": "object",
+        "required": ["list_of_value"],
         "properties": {
           "list_of_value": {
             'type': 'object',
+            'required': ["list_of_any"],
             'properties': {
               "list_of_any": {
                 "type": "array",
                 "items": {
                   "type": "object",
+                  "required": ["sort_key", "sort_num"],
                   "properties": {
                     'sort_num': {
                       'type': 'object',
+                      'required': ["value"],
                       'properties': {
                         'value': {'type': 'integer'}
                       }
                     },
                     "sort_key": {
                       "type": "object",
+                      "required": ["value"],
                       "properties": {
-                        "value": {"type": "string"}
+                        "value": {"type": "string"},
                       }
                     }
                   }
@@ -477,23 +491,28 @@ void main() {
 
       expect(objectNode.toMap(), {
         "type": "object",
+        "required": ["list_of_value"],
         "properties": {
           "list_of_value": {
             'type': 'object',
+            'required': ["list_of_any"],
             'properties': {
               "list_of_any": {
                 "type": "array",
                 "items": {
                   "type": "object",
+                  "required": ["sort_key", "sort_num"],
                   "properties": {
                     'sort_num': {
                       'type': 'object',
+                      'required': ["value"],
                       'properties': {
                         'value': {'type': 'integer'}
                       }
                     },
                     "sort_key": {
                       "type": "object",
+                      "required": ["value", "value_div"],
                       "properties": {
                         "value": {"type": "string"},
                         "value_div": {
@@ -576,5 +595,77 @@ void main() {
     //     }
     //   });
     // });
+    // */
+    test('nullsuffix is not required', () async {
+      final List<String> filePaths = [
+        'test/object_node/test_data/list_of_val_key_nullsuffix/list_of_val.dart',
+        'test/object_node/test_data/list_of_val_key_nullsuffix/list_of_val.freezed.dart',
+        'test/object_node/test_data/list_of_val_key_nullsuffix/list_of_val.g.dart',
+      ];
+      final Map<String, String> resolveSourceMap = {};
+      for (final filePath in filePaths) {
+        resolveSourceMap["main|$filePath"] = File(filePath).readAsStringSync();
+      }
+
+      final main = await resolveSources(resolveSourceMap, (Resolver resolver) {
+        return resolver.libraries.toList();
+      });
+
+      final els = main.map((e) => e.getClass("ListOfValue"));
+
+      ObjectNode? objectNode;
+      for (final e in els) {
+        if (e == null) {
+          continue;
+        }
+        objectNode = ObjectNode.visit(e.thisType);
+        break;
+      }
+
+      if (objectNode == null) {
+        expect(false, true);
+        return;
+      }
+
+      expect(objectNode.toMap(), {
+        "type": "object",
+        "required": ["list_of_value"],
+        "properties": {
+          "list_of_value": {
+            'type': 'object',
+            'required': ["list_of_any"],
+            'properties': {
+              "list_of_any": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["sort_key"],
+                  "properties": {
+                    'sort_num': {
+                      'type': 'object',
+                      'required': ["value"],
+                      'properties': {
+                        'value': {'type': 'integer'}
+                      }
+                    },
+                    "sort_key": {
+                      "type": "object",
+                      "required": ["value", "value_div"],
+                      "properties": {
+                        "value": {"type": "string"},
+                        "value_div": {
+                          "type": "integer",
+                          "enum": [0, 1]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      });
+    });
   });
 }

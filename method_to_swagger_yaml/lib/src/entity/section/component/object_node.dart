@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -10,6 +11,11 @@ class ObjectNode {
 
   ObjectNode._(this.type, this.properties,
       {this.itemNode, this.typeArguments = const {}});
+
+  bool get isNullable {
+    return type.isDartCoreNull ||
+        type.nullabilitySuffix == NullabilitySuffix.question;
+  }
 
   factory ObjectNode.visit(final DartType type,
       {Map<String, DartType> typeArguments = const {}}) {
@@ -101,6 +107,8 @@ class ObjectNode {
         'properties': {},
       };
 
+      final requiredProperties = <String>[];
+
       final allArgs = {...typeArguments, ...parentTypeArguments};
 
       for (final entry in properties.entries) {
@@ -116,15 +124,29 @@ class ObjectNode {
             continue;
           }
           map['properties'][entry.key.toSnakeCase()] = value;
+
+          if (!entry.value.isNullable) {
+            requiredProperties.add(entry.key.toSnakeCase());
+          }
         } else {
           for (final arg in allArgs.entries) {
             final node = ObjectNode.visit(arg.value);
             final nodeToMap = node.toMap();
             if (nodeToMap != null) {
               map['properties'][entry.key.toSnakeCase()] = nodeToMap;
+              if (!entry.value.isNullable) {
+                requiredProperties.add(entry.key.toSnakeCase());
+              }
             }
           }
         }
+      }
+
+      requiredProperties
+          .sort(); // Add this line to sort the required properties
+
+      if (requiredProperties.isNotEmpty) {
+        map['required'] = requiredProperties;
       }
 
       return map;
