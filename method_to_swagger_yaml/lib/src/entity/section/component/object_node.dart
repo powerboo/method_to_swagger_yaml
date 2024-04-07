@@ -41,7 +41,8 @@ class ObjectNode {
     return ObjectNode._(type, properties, typeArguments: typeArguments);
   }
 
-  Map<String, dynamic>? toMap() {
+  Map<String, dynamic>? toMap(
+      {Map<String, DartType> parentTypeArguments = const {}}) {
     if (type is VoidType) {
       return null;
     }
@@ -64,7 +65,11 @@ class ObjectNode {
     } else if (type is ParameterizedType && type.isDartCoreList) {
       return {
         'type': 'array',
-        'items': itemNode?.toMap() ?? {'type': 'object'},
+        'items': itemNode?.toMap(parentTypeArguments: {
+              ...typeArguments,
+              ...parentTypeArguments
+            }) ??
+            {'type': 'object'},
       };
     } else if (type is InterfaceType) {
       final map = <String, dynamic>{
@@ -73,7 +78,8 @@ class ObjectNode {
       };
 
       for (final entry in properties.entries) {
-        final value = entry.value.toMap();
+        final value = entry.value.toMap(
+            parentTypeArguments: {...typeArguments, ...parentTypeArguments});
         if (value != null) {
           // Avoid adding @JsonKey properties and freezed properties
           if (entry.key.startsWith('is') ||
@@ -85,6 +91,24 @@ class ObjectNode {
             continue;
           }
           map['properties'][entry.key] = value;
+        }
+      }
+      if (typeArguments.isNotEmpty) {
+        for (final entry in typeArguments.entries) {
+          final node = _createObjectNodeForType(entry.value, {});
+          final nodeToMap = node.toMap();
+          if (nodeToMap != null) {
+            map['properties'][entry.key] = nodeToMap;
+          }
+        }
+      }
+      if (parentTypeArguments.isNotEmpty) {
+        for (final entry in parentTypeArguments.entries) {
+          final node = _createObjectNodeForType(entry.value, {});
+          final nodeToMap = node.toMap();
+          if (nodeToMap != null) {
+            map['properties'][entry.key] = nodeToMap;
+          }
         }
       }
 
