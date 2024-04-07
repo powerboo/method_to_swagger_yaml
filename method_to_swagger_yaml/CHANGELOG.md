@@ -1,3 +1,7 @@
+## 0.0.8
+
+fix array return
+
 ## 0.0.7
 
 support enum

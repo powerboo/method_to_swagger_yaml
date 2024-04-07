@@ -1,14 +1,8 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:method_to_swagger_yaml/src/entity/output/component/component_entity.dart';
-import 'package:method_to_swagger_yaml/src/entity/output/component/object_node.dart';
 import 'package:method_to_swagger_yaml/src/entity/output/path_entity.dart';
-import 'package:method_to_swagger_yaml/src/entity/output/request_body_entity.dart';
-import 'package:method_to_swagger_yaml/src/entity/output/request_parameter/parameter_entity.dart';
-import 'package:method_to_swagger_yaml/src/entity/output/request_parameter_entity.dart';
-import 'package:method_to_swagger_yaml/src/entity/output/response_entity.dart';
 import 'package:method_to_swagger_yaml/src/entity/output/tag_entity.dart';
 import 'package:method_to_swagger_yaml/src/entity/section/component/component_section.dart';
 import 'package:method_to_swagger_yaml/src/entity/section/info_section.dart';
