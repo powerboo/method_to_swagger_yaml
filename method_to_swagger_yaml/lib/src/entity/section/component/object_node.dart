@@ -93,13 +93,31 @@ class ObjectNode {
         'enum': result,
       };
     } else if (type is ParameterizedType && type.isDartCoreList) {
+      if (itemNode == null) {
+        if (type is InterfaceType) {
+          final t = type as InterfaceType;
+          final node = ObjectNode.visit(t.typeArguments.first,
+              typeArguments: typeArguments);
+          final n = node.toMap();
+          if (n == null) {
+            return null;
+          }
+          return {
+            'type': 'array',
+            'items': n,
+          };
+        }
+        return null;
+      }
+      final itemMap = itemNode?.toMap(
+          parentTypeArguments: {...typeArguments, ...parentTypeArguments});
+      if (itemMap == null) {
+        return null;
+      }
+
       return {
         'type': 'array',
-        'items': itemNode?.toMap(parentTypeArguments: {
-              ...typeArguments,
-              ...parentTypeArguments
-            }) ??
-            {'type': 'object'},
+        'items': itemMap,
       };
     } else if (type is InterfaceType) {
       if (type.isDartAsyncFuture ||

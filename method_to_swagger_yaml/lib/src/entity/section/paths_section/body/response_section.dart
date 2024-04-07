@@ -27,6 +27,11 @@ class ResponseSection {
       getComponentSection(componentSection);
     }
     ComponentSection.add(componentSection);
+    final _ = ComponentSection(
+      returnType: returnType,
+      variableName: "Return",
+      methodName: methodElement.name,
+    );
 
     final schema = SchemaSection(
       componentSection: componentSection,

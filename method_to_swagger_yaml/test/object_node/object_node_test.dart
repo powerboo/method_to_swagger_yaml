@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:build_test/build_test.dart';
 import 'package:test/test.dart';
@@ -165,6 +166,84 @@ void main() {
       final result = ObjectNode.visit(doubleType).toMap();
 
       expect(result, {'type': 'number'});
+    });
+
+    test('array type', () async {
+      final testStringCode = '''
+    final List<int> value = [];
+  ''';
+      final resolveResult =
+          await resolveSource(testStringCode, (Resolver resolver) {
+        return resolver;
+      });
+
+      final libraryElement = await resolveResult.libraries.first;
+      final typeProvider = libraryElement.typeProvider;
+      final intType = typeProvider.intType;
+      final listType = typeProvider.listType(intType);
+
+      final result = ObjectNode.visit(listType).toMap();
+
+      expect(result, {
+        "type": "array",
+        "items": {"type": "integer"}
+      });
+    });
+
+    test('array type with object', () async {
+      final testStringCode = '''
+    class TestClass {
+      String name;
+      int age;
+      DateTime dateTime;
+      List<String> hobbies;
+      
+      TestClass(this.name, this.age, this.dateTime, this.hobbies);
+    }
+
+    final List<TestClass> testVariable = [];
+  ''';
+      final Map<String, String> resolveSourceMap = {};
+      resolveSourceMap["main|target.dart"] = testStringCode;
+
+      final main = await resolveSources(resolveSourceMap, (Resolver resolver) {
+        return resolver.libraries.toList();
+      });
+
+      ObjectNode? objectNode;
+      for (final e in main) {
+        for (final t in e.topLevelElements) {
+          if (t is VariableElement && t.name == "testVariable") {
+            objectNode = ObjectNode.visit(t.type);
+            break;
+          }
+        }
+        if (objectNode != null) {
+          break;
+        }
+      }
+
+      if (objectNode == null) {
+        expect(false, true);
+        return;
+      }
+
+      expect(objectNode.toMap(), {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["age", "date_time", "hobbies", "name"],
+          "properties": {
+            "name": {"type": "string"},
+            "age": {"type": "integer"},
+            "hobbies": {
+              "type": "array",
+              "items": {"type": "string"}
+            },
+            "date_time": {"type": "string", "format": "date-time"}
+          }
+        }
+      });
     });
 
     test('Void type', () async {
