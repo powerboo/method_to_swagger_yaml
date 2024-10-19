@@ -49,24 +49,6 @@ paths:
           description: operation failure.
 components: 
   schemas: 
-    GetMethodFreezedId: 
-      type: string
-    GetMethodNamedStringValue: 
-      type: string
-    GetMethodNamedClassValue: 
-      type: object
-      properties: 
-        value: 
-          type: string
-      required: 
-        - value
-    GetMethodRequiredNamedNullableClassValue: 
-      type: object
-      properties: 
-        value: 
-          type: string
-      required: 
-        - value
     GetMethodFreezedClass: 
       type: object
       properties: 
@@ -87,3 +69,21 @@ components:
       required: 
         - 'freezed_id'
         - 'freezed_value'
+    GetMethodFreezedId: 
+      type: string
+    GetMethodNamedClassValue: 
+      type: object
+      properties: 
+        value: 
+          type: string
+      required: 
+        - value
+    GetMethodNamedStringValue: 
+      type: string
+    GetMethodRequiredNamedNullableClassValue: 
+      type: object
+      properties: 
+        value: 
+          type: string
+      required: 
+        - value

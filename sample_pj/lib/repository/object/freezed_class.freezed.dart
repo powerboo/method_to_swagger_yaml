@@ -23,8 +23,12 @@ mixin _$FreezedClass {
   FreezedId get freezedId => throw _privateConstructorUsedError;
   FreezedValue get freezedValue => throw _privateConstructorUsedError;
 
+  /// Serializes this FreezedClass to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of FreezedClass
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $FreezedClassCopyWith<FreezedClass> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -51,6 +55,8 @@ class _$FreezedClassCopyWithImpl<$Res, $Val extends FreezedClass>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of FreezedClass
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -69,6 +75,8 @@ class _$FreezedClassCopyWithImpl<$Res, $Val extends FreezedClass>
     ) as $Val);
   }
 
+  /// Create a copy of FreezedClass
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $FreezedIdCopyWith<$Res> get freezedId {
@@ -77,6 +85,8 @@ class _$FreezedClassCopyWithImpl<$Res, $Val extends FreezedClass>
     });
   }
 
+  /// Create a copy of FreezedClass
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $FreezedValueCopyWith<$Res> get freezedValue {
@@ -110,6 +120,8 @@ class __$$FreezedClassImplCopyWithImpl<$Res>
       _$FreezedClassImpl _value, $Res Function(_$FreezedClassImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FreezedClass
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -160,11 +172,13 @@ class _$FreezedClassImpl extends _FreezedClass {
                 other.freezedValue == freezedValue));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, freezedId, freezedValue);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FreezedClass
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FreezedClassImplCopyWith<_$FreezedClassImpl> get copyWith =>
@@ -191,8 +205,11 @@ abstract class _FreezedClass extends FreezedClass {
   FreezedId get freezedId;
   @override
   FreezedValue get freezedValue;
+
+  /// Create a copy of FreezedClass
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FreezedClassImplCopyWith<_$FreezedClassImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -19,8 +19,7 @@ dependencies:
   donuts: ^0.1.6
 
 dev_dependencies:
-  method_to_swagger_yaml: ^0.0.10
-
+  method_to_swagger_yaml: ^0.0.11
   flutter_test:
     sdk: flutter
 

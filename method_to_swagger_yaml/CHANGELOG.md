@@ -1,3 +1,7 @@
+## 0.0.11
+
+- add sort component
+
 ## 0.0.10
 
 - add useToString option in RequestParameter

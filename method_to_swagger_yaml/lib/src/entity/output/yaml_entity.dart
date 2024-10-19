@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
@@ -320,8 +322,15 @@ class YamlEntity {
           component.addAll(r);
         }
       }
+      // ソートする
+      final SplayTreeMap<String, Object?> sortedMap =
+          SplayTreeMap<String, Object?>.from(component);
+
+      final Map<String, Object?> sortedComponent =
+          Map<String, Object?>.from(sortedMap);
+
       yamlObject.addAll({
-        "components": {"schemas": component}
+        "components": {"schemas": sortedComponent}
       });
     }
 

@@ -8,7 +8,7 @@ part of 'freezed_value.dart';
 
 _$FreezedValueImpl _$$FreezedValueImplFromJson(Map<String, dynamic> json) =>
     _$FreezedValueImpl(
-      value: json['value'] as int,
+      value: (json['value'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$FreezedValueImplToJson(_$FreezedValueImpl instance) =>

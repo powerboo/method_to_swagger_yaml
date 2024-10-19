@@ -22,8 +22,12 @@ FreezedValue _$FreezedValueFromJson(Map<String, dynamic> json) {
 mixin _$FreezedValue {
   int get value => throw _privateConstructorUsedError;
 
+  /// Serializes this FreezedValue to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of FreezedValue
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $FreezedValueCopyWith<FreezedValue> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -47,6 +51,8 @@ class _$FreezedValueCopyWithImpl<$Res, $Val extends FreezedValue>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of FreezedValue
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -80,6 +86,8 @@ class __$$FreezedValueImplCopyWithImpl<$Res>
       _$FreezedValueImpl _value, $Res Function(_$FreezedValueImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FreezedValue
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -118,11 +126,13 @@ class _$FreezedValueImpl extends _FreezedValue {
             (identical(other.value, value) || other.value == value));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, value);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FreezedValue
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FreezedValueImplCopyWith<_$FreezedValueImpl> get copyWith =>
@@ -145,8 +155,11 @@ abstract class _FreezedValue extends FreezedValue {
 
   @override
   int get value;
+
+  /// Create a copy of FreezedValue
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FreezedValueImplCopyWith<_$FreezedValueImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

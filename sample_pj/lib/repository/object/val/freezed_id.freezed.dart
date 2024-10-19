@@ -22,8 +22,12 @@ FreezedId _$FreezedIdFromJson(Map<String, dynamic> json) {
 mixin _$FreezedId {
   String get freezedId => throw _privateConstructorUsedError;
 
+  /// Serializes this FreezedId to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of FreezedId
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $FreezedIdCopyWith<FreezedId> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -46,6 +50,8 @@ class _$FreezedIdCopyWithImpl<$Res, $Val extends FreezedId>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of FreezedId
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -79,6 +85,8 @@ class __$$FreezedIdImplCopyWithImpl<$Res>
       _$FreezedIdImpl _value, $Res Function(_$FreezedIdImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FreezedId
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -118,11 +126,13 @@ class _$FreezedIdImpl extends _FreezedId {
                 other.freezedId == freezedId));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, freezedId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FreezedId
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FreezedIdImplCopyWith<_$FreezedIdImpl> get copyWith =>
@@ -145,8 +155,11 @@ abstract class _FreezedId extends FreezedId {
 
   @override
   String get freezedId;
+
+  /// Create a copy of FreezedId
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FreezedIdImplCopyWith<_$FreezedIdImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
