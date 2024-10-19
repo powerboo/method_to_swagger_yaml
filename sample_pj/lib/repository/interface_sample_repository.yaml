@@ -7,6 +7,13 @@ paths:
     get: 
       operationId: getMethod
       parameters: 
+        - name: freezedId
+          in: path
+          description: parameter description.
+          required: true
+          explode: false
+          schema: 
+            $ref: '#/components/schemas/GetMethodFreezedId'
         - name: namedStringValue
           in: query
           description: parameter description.
@@ -42,6 +49,8 @@ paths:
           description: operation failure.
 components: 
   schemas: 
+    GetMethodFreezedId: 
+      type: string
     GetMethodNamedStringValue: 
       type: string
     GetMethodNamedClassValue: 
@@ -49,11 +58,15 @@ components:
       properties: 
         value: 
           type: string
+      required: 
+        - value
     GetMethodRequiredNamedNullableClassValue: 
       type: object
       properties: 
         value: 
           type: string
+      required: 
+        - value
     GetMethodFreezedClass: 
       type: object
       properties: 
@@ -62,8 +75,15 @@ components:
           properties: 
             freezed_id: 
               type: string
+          required: 
+            - 'freezed_id'
         freezed_value: 
           type: object
           properties: 
             value: 
               type: integer
+          required: 
+            - value
+      required: 
+        - 'freezed_id'
+        - 'freezed_value'

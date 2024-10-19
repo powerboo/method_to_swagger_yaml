@@ -1,7 +1,7 @@
 name: method_to_swagger_yaml_annotation
-description: "method to swagger yaml annotation."
-version: 0.0.1
+description: 'method to swagger yaml annotation.'
+version: 0.0.2
 repository: https://github.com/powerboo/method_to_swagger_yaml
 
 environment:
-  sdk: ">=3.2.4 <4.0.0"
+  sdk: '>=3.2.4 <4.0.0'

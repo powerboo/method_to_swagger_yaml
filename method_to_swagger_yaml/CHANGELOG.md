@@ -1,3 +1,7 @@
+## 0.0.10
+
+- add useToString option in RequestParameter
+
 ## 0.0.9
 
 fix array return

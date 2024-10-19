@@ -33,7 +33,12 @@
       "request": "launch",
       "type": "dart",
       "program": ".dart_tool/build/entrypoint/build.dart",
-      "args": ["build", "--delete-conflicting-outputs"]
+      "args": [
+        "build",
+        "--delete-conflicting-outputs",
+        "--no-release",
+        "--no-fail-on-severe"
+      ]
     },
     {
       "name": "sample_pj (profile mode)",

@@ -44,6 +44,7 @@ class RequestParameter {
   final PathParameterStyleDiv? pathStyle;
   final QueryParameterStyleDiv? queryStyle;
   final bool? explode;
+  final bool useToString;
 
   const RequestParameter({
     this.requestParameterDiv = RequestParameterDiv.query,
@@ -51,6 +52,7 @@ class RequestParameter {
     this.pathStyle,
     this.queryStyle,
     this.explode,
+    this.useToString = false,
   });
 }
 
@@ -67,7 +69,8 @@ enum QueryParameterStyleDiv {
   factory QueryParameterStyleDiv.fromString({
     required String value,
   }) {
-    final indexEnum = QueryParameterStyleDiv.values.firstWhere((e) => e.toStringValue == value);
+    final indexEnum = QueryParameterStyleDiv.values
+        .firstWhere((e) => e.toStringValue == value);
     return indexEnum;
   }
 }
@@ -84,7 +87,8 @@ enum PathParameterStyleDiv {
   factory PathParameterStyleDiv.from({
     required String value,
   }) {
-    final indexEnum = PathParameterStyleDiv.values.firstWhere((e) => e.toStringValue == value);
+    final indexEnum = PathParameterStyleDiv.values
+        .firstWhere((e) => e.toStringValue == value);
     return indexEnum;
   }
 }
@@ -105,7 +109,8 @@ enum RequestParameterDiv {
   factory RequestParameterDiv.from({
     required String value,
   }) {
-    final indexEnum = RequestParameterDiv.values.firstWhere((e) => e.toStringValue == value);
+    final indexEnum =
+        RequestParameterDiv.values.firstWhere((e) => e.toStringValue == value);
     return indexEnum;
   }
 }
@@ -124,7 +129,8 @@ enum HttpMethodDiv {
   factory HttpMethodDiv.from({
     required String value,
   }) {
-    final indexEnum = HttpMethodDiv.values.firstWhere((e) => e.toStringValue == value);
+    final indexEnum =
+        HttpMethodDiv.values.firstWhere((e) => e.toStringValue == value);
     return indexEnum;
   }
 }
