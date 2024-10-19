@@ -334,6 +334,9 @@ class YamlEntity {
       });
     }
 
+    // グローバル変数をクリア
+    componentSectionList.clear();
+
     final String yaml = yamlWriter.write(yamlObject);
     return yaml;
   }

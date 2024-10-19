@@ -1,3 +1,7 @@
+## 0.0.12
+
+- add global variable clear
+
 ## 0.0.11
 
 - add sort component
