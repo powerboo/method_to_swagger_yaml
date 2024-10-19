@@ -1,3 +1,4 @@
+import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:method_to_swagger_yaml/src/entity/section/component/object_node.dart';
 
@@ -8,14 +9,21 @@ class ComponentSection {
   final String variableName;
   final DartType returnType;
   final ObjectNode objectNode;
+  final Element element;
 
   ComponentSection({
     required this.methodName,
     required this.variableName,
     required this.returnType,
+    required this.element,
   }) : objectNode = ObjectNode.visit(returnType);
 
   static add(ComponentSection componentSection) {
+    // IgnoreFieldInYamlになっている場合は追加しない
+    if (componentSection.element.metadata
+        .any((e) => e.element?.displayName == 'IgnoreFieldInYaml')) {
+      return;
+    }
     componentSectionList.add(componentSection);
   }
 

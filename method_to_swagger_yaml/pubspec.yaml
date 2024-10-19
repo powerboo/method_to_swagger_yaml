@@ -1,6 +1,6 @@
 name: method_to_swagger_yaml
 description: 'method to swagger yaml.'
-version: 0.0.12
+version: 0.0.13
 repository: https://github.com/powerboo/method_to_swagger_yaml
 
 environment:
@@ -9,7 +9,7 @@ environment:
 dependencies:
   build: ^2.3.1
   analyzer: '>=6.0.0 <7.0.0'
-  method_to_swagger_yaml_annotation: ^0.0.2
+  method_to_swagger_yaml_annotation: ^0.0.3
   source_gen: ^1.5.0
   logging: ^1.2.0
   path: '>1.0.0 <2.3.0-beta'

@@ -26,7 +26,13 @@ class ObjectNode {
         return ObjectNode._(type, properties);
       }
 
-      properties.addAll(_getPropertiesFromInterfaceType(type, typeArguments));
+      for (final entry
+          in _getPropertiesFromInterfaceType(type, typeArguments).entries) {
+        if (_hasIgnoreFieldInYamlAnnotation(entry.value.type.element)) {
+          continue;
+        }
+        properties[entry.key] = entry.value;
+      }
 
       // Handling for freezed classes
       if (type.element.constructors.any((c) => c.isFactory)) {
@@ -36,6 +42,7 @@ class ObjectNode {
               .addAll(_getPropertiesFromInterfaceType(mixin, typeArguments));
         }
       }
+      return ObjectNode._(type, properties, typeArguments: typeArguments);
     } else if (type is ParameterizedType && type.isDartCoreList) {
       final itemType = type.typeArguments.first;
       final itemNode = _createObjectNodeForType(itemType, typeArguments);
@@ -44,9 +51,19 @@ class ObjectNode {
       final bound = type.bound;
       final actualType = typeArguments[type.element.name] ?? bound;
       return ObjectNode.visit(actualType, typeArguments: typeArguments);
+    } else {
+      return ObjectNode._(type, properties, typeArguments: typeArguments);
     }
+  }
 
-    return ObjectNode._(type, properties, typeArguments: typeArguments);
+  Element? getFieldElement(String fieldName) {
+    if (type is InterfaceType) {
+      final interfaceType = type as InterfaceType;
+      return interfaceType.element
+              .lookUpGetter(fieldName, interfaceType.element.library) ??
+          interfaceType.element.getField(fieldName);
+    }
+    return null;
   }
 
   Map<String, dynamic>? toMap(
@@ -126,6 +143,9 @@ class ObjectNode {
         final Map<String, dynamic> result = {};
         for (final t in (type as InterfaceType).typeArguments) {
           final node = _createObjectNodeForType(t, {...typeArguments});
+          if (node == null) {
+            continue;
+          }
           final n = node.toMap();
           if (n != null) {
             result.addAll(n);
@@ -144,6 +164,18 @@ class ObjectNode {
       final allArgs = {...typeArguments, ...parentTypeArguments};
 
       for (final entry in properties.entries) {
+        print('Processing field: ${entry.key}'); // デバッグ出力
+        print(
+            'Has IgnoreFieldInYaml annotation: ${_hasIgnoreFieldInYamlAnnotation(_getFieldElement(type, entry.key))}'); // デバッグ出力
+
+        // IgnoreFieldInYaml アノテーションがついているフィールドをスキップ
+        if (_hasIgnoreFieldInYamlAnnotation(entry.value.type.element) ||
+            _hasIgnoreFieldInYamlAnnotation(
+                _getFieldElement(type, entry.key))) {
+          print('Skipping field: ${entry.key}'); // デバッグ出力
+          continue;
+        }
+
         final value = entry.value.toMap(parentTypeArguments: allArgs);
         if (value != null) {
           // Avoid adding @JsonKey properties and freezed properties
@@ -155,9 +187,23 @@ class ObjectNode {
               entry.key == 'hashCode') {
             continue;
           }
+          final element = getFieldElement(entry.key);
+          if (element == null) {
+            continue;
+          }
+          if (_hasIgnoreFieldInYamlAnnotation(element)) {
+            continue;
+          }
           map['properties'][entry.key.toSnakeCase()] = value;
 
           if (!entry.value.isNullable) {
+            final element = getFieldElement(entry.key);
+            if (element == null) {
+              continue;
+            }
+            if (_hasIgnoreFieldInYamlAnnotation(element)) {
+              continue;
+            }
             requiredProperties.add(entry.key.toSnakeCase());
           }
         } else {
@@ -165,8 +211,23 @@ class ObjectNode {
             final node = ObjectNode.visit(arg.value);
             final nodeToMap = node.toMap();
             if (nodeToMap != null) {
+              final element = getFieldElement(entry.key);
+              if (element == null) {
+                continue;
+              }
+              if (_hasIgnoreFieldInYamlAnnotation(element)) {
+                continue;
+              }
+
               map['properties'][entry.key.toSnakeCase()] = nodeToMap;
               if (!entry.value.isNullable) {
+                final element = getFieldElement(entry.key);
+                if (element == null) {
+                  continue;
+                }
+                if (_hasIgnoreFieldInYamlAnnotation(element)) {
+                  continue;
+                }
                 requiredProperties.add(entry.key.toSnakeCase());
               }
             }
@@ -195,14 +256,20 @@ Map<String, ObjectNode> _getPropertiesFromInterfaceType(
   for (final field in type.element.fields) {
     if (field.isStatic) continue;
     if (field.name == 'hashCode') continue;
+    if (_hasIgnoreFieldInYamlAnnotation(field)) continue;
 
     final fieldType = field.type;
     final fieldNode = _createObjectNodeForType(fieldType, typeArguments);
-    properties[field.name] = fieldNode;
+    if (fieldNode != null) {
+      properties[field.name] = fieldNode;
+    }
   }
 
   // クラスのプロパティを取得
   for (final accessor in type.element.accessors) {
+    if (_hasIgnoreFieldInYamlAnnotation(accessor)) {
+      continue;
+    }
     if (accessor.isGetter &&
         !accessor.isStatic &&
         accessor.name != 'runtimeType' &&
@@ -212,15 +279,20 @@ Map<String, ObjectNode> _getPropertiesFromInterfaceType(
       final fieldName = accessor.name;
       final fieldNode =
           _createObjectNodeForType(accessor.returnType, typeArguments);
-      properties[fieldName] = fieldNode;
+      if (fieldNode != null) {
+        properties[fieldName] = fieldNode;
+      }
     }
   }
 
   return properties;
 }
 
-ObjectNode _createObjectNodeForType(
+ObjectNode? _createObjectNodeForType(
     DartType type, Map<String, DartType> typeArguments) {
+  if (_hasIgnoreFieldInYamlAnnotation(type.element)) {
+    return null;
+  }
   if (type.isDartAsyncFuture ||
       type.isDartAsyncFutureOr ||
       type.isDartAsyncStream) {
@@ -235,20 +307,41 @@ ObjectNode _createObjectNodeForType(
     return ObjectNode._(type, {});
   } else if (type is ParameterizedType && type.isDartCoreList) {
     final itemType = type.typeArguments.first;
+    if (_hasIgnoreFieldInYamlAnnotation(itemType.element)) {
+      return null;
+    }
     final itemNode = _createObjectNodeForType(itemType, typeArguments);
+    if (itemNode == null) {
+      return null;
+    }
     return ObjectNode._(type, {}, itemNode: itemNode);
   } else if (type is InterfaceType) {
-    final visitedTypeArguments = {
-      for (var i = 0; i < type.typeArguments.length; i++)
-        type.element.typeParameters[i].name: type.typeArguments[i]
-    };
+    final visitedTypeArguments = {};
+    for (var i = 0; i < type.typeArguments.length; i++) {
+      if (_hasIgnoreFieldInYamlAnnotation(type.typeArguments[i].element)) {
+        continue;
+      }
+      visitedTypeArguments[type.element.typeParameters[i].name] =
+          type.typeArguments[i];
+    }
+
     return ObjectNode.visit(type,
         typeArguments: {...typeArguments, ...visitedTypeArguments});
   } else if (type is TypeParameterType) {
+    if (_hasIgnoreFieldInYamlAnnotation(type.element)) {
+      return null;
+    }
     final actualType = typeArguments[type.element.name];
     if (actualType != null && actualType is! TypeParameterType) {
+      if (_hasIgnoreFieldInYamlAnnotation(actualType.element)) {
+        return null;
+      }
+
       return _createObjectNodeForType(actualType, typeArguments);
     } else {
+      if (_hasIgnoreFieldInYamlAnnotation(type.element)) {
+        return null;
+      }
       return ObjectNode._(type, {});
     }
   }
@@ -261,6 +354,12 @@ class ObjectNodeException implements Exception {
 
   @override
   String toString() => "[ObjectNodeException] $message";
+}
+
+bool _hasIgnoreFieldInYamlAnnotation(Element? element) {
+  if (element == null) return false;
+  return element.metadata
+      .any((e) => e.element?.displayName == 'IgnoreFieldInYaml');
 }
 
 extension KebabCase on String {
@@ -277,4 +376,12 @@ extension KebabCase on String {
             regExp, (Match match) => '_${match.group(0)!.toLowerCase()}')
         .toLowerCase();
   }
+}
+
+// 新しいヘルパーメソッドを追加
+Element? _getFieldElement(DartType type, String fieldName) {
+  if (type is InterfaceType) {
+    return type.element.getField(fieldName);
+  }
+  return null;
 }

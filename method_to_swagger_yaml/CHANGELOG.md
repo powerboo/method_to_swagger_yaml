@@ -1,3 +1,7 @@
+# 0.0.13
+
+- add IgnoreFieldInYaml annotation
+
 ## 0.0.12
 
 - add global variable clear

@@ -145,17 +145,6 @@ class ExternalDocs {
   });
 }
 
-class ExternalDocsException implements Exception {
-  late final String message;
-  ExternalDocsException(final String message) {
-    this.message = "[ExternalDocsException] $message";
-  }
-  @override
-  String toString() {
-    return message;
-  }
-}
-
 class Tag {
   final String name;
   final String? description;
@@ -168,13 +157,6 @@ class Tag {
   });
 }
 
-class TagException implements Exception {
-  late final String message;
-  TagException(final String message) {
-    this.message = "[TagException] $message";
-  }
-  @override
-  String toString() {
-    return message;
-  }
+class IgnoreFieldInYaml {
+  const IgnoreFieldInYaml();
 }

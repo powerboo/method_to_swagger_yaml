@@ -3,45 +3,52 @@ info:
   title: sample.
   version: 0.0.1
 paths: 
-  /sample-path: 
+  /v1-sample-path: 
     get: 
-      operationId: getMethod
+      operationId: v1GetMethod
       parameters: 
-        - name: freezedId
+        - name: v1FreezedId
           in: path
           description: parameter description.
           required: true
           explode: false
           schema: 
-            $ref: '#/components/schemas/GetMethodFreezedId'
-        - name: namedStringValue
+            $ref: '#/components/schemas/V1GetMethodV1FreezedId'
+        - name: v1NamedStringValue
           in: query
           description: parameter description.
           required: true
           explode: false
           schema: 
-            $ref: '#/components/schemas/GetMethodNamedStringValue'
-        - name: namedClassValue
+            $ref: '#/components/schemas/V1GetMethodV1NamedStringValue'
+        - name: v1NamedClassValue
           in: query
           description: parameter description.
           required: true
           explode: false
           schema: 
-            $ref: '#/components/schemas/GetMethodNamedClassValue'
-        - name: requiredNamedNullableClassValue
+            $ref: '#/components/schemas/V1GetMethodV1NamedClassValue'
+        - name: v1RequiredNamedNullableClassValue
           in: query
           description: parameter description.
           required: true
           explode: false
           schema: 
-            $ref: '#/components/schemas/GetMethodRequiredNamedNullableClassValue'
-        - name: freezedClass
+            $ref: '#/components/schemas/V1GetMethodV1RequiredNamedNullableClassValue'
+        - name: v1FreezedClass
           in: query
           description: parameter description.
           required: true
           explode: false
           schema: 
-            $ref: '#/components/schemas/GetMethodFreezedClass'
+            $ref: '#/components/schemas/V1GetMethodV1FreezedClass'
+        - name: include
+          in: query
+          description: parameter description.
+          required: true
+          explode: false
+          schema: 
+            $ref: '#/components/schemas/V1GetMethodInclude'
       responses: 
         '200': 
           description: Successful operation.
@@ -49,7 +56,14 @@ paths:
           description: operation failure.
 components: 
   schemas: 
-    GetMethodFreezedClass: 
+    V1GetMethodInclude: 
+      type: object
+      properties: 
+        skip_target: 
+          type: string
+      required: 
+        - 'skip_target'
+    V1GetMethodV1FreezedClass: 
       type: object
       properties: 
         freezed_id: 
@@ -69,18 +83,18 @@ components:
       required: 
         - 'freezed_id'
         - 'freezed_value'
-    GetMethodFreezedId: 
+    V1GetMethodV1FreezedId: 
       type: string
-    GetMethodNamedClassValue: 
+    V1GetMethodV1NamedClassValue: 
       type: object
       properties: 
         value: 
           type: string
       required: 
         - value
-    GetMethodNamedStringValue: 
+    V1GetMethodV1NamedStringValue: 
       type: string
-    GetMethodRequiredNamedNullableClassValue: 
+    V1GetMethodV1RequiredNamedNullableClassValue: 
       type: object
       properties: 
         value: 

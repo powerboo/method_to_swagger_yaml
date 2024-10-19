@@ -1,0 +1,103 @@
+openapi: 3.0.0
+info: 
+  title: sample v2.
+  version: 0.0.1
+paths: 
+  /v2-sample-path: 
+    get: 
+      operationId: v2GetMethod
+      parameters: 
+        - name: v2FreezedId
+          in: path
+          description: parameter description.
+          required: true
+          explode: false
+          schema: 
+            $ref: '#/components/schemas/V2GetMethodV2FreezedId'
+        - name: v2NamedStringValue
+          in: query
+          description: parameter description.
+          required: true
+          explode: false
+          schema: 
+            $ref: '#/components/schemas/V2GetMethodV2NamedStringValue'
+        - name: v2NamedClassValue
+          in: query
+          description: parameter description.
+          required: true
+          explode: false
+          schema: 
+            $ref: '#/components/schemas/V2GetMethodV2NamedClassValue'
+        - name: v2RequiredNamedNullableClassValue
+          in: query
+          description: parameter description.
+          required: true
+          explode: false
+          schema: 
+            $ref: '#/components/schemas/V2GetMethodV2RequiredNamedNullableClassValue'
+        - name: v2FreezedClass
+          in: query
+          description: parameter description.
+          required: true
+          explode: false
+          schema: 
+            $ref: '#/components/schemas/V2GetMethodV2FreezedClass'
+        - name: include
+          in: query
+          description: parameter description.
+          required: true
+          explode: false
+          schema: 
+            $ref: '#/components/schemas/V2GetMethodInclude'
+      responses: 
+        '200': 
+          description: Successful operation.
+        '400': 
+          description: operation failure.
+components: 
+  schemas: 
+    V2GetMethodInclude: 
+      type: object
+      properties: 
+        skip_target: 
+          type: string
+      required: 
+        - 'skip_target'
+    V2GetMethodV2FreezedClass: 
+      type: object
+      properties: 
+        freezed_id: 
+          type: object
+          properties: 
+            freezed_id: 
+              type: string
+          required: 
+            - 'freezed_id'
+        freezed_value: 
+          type: object
+          properties: 
+            value: 
+              type: integer
+          required: 
+            - value
+      required: 
+        - 'freezed_id'
+        - 'freezed_value'
+    V2GetMethodV2FreezedId: 
+      type: string
+    V2GetMethodV2NamedClassValue: 
+      type: object
+      properties: 
+        value: 
+          type: string
+      required: 
+        - value
+    V2GetMethodV2NamedStringValue: 
+      type: string
+    V2GetMethodV2RequiredNamedNullableClassValue: 
+      type: object
+      properties: 
+        value: 
+          type: string
+      required: 
+        - value

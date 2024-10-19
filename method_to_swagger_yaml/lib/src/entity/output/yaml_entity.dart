@@ -374,6 +374,10 @@ DartType? getFutureGenericType(MethodElement method) {
     case HttpMethodDiv.delete:
       {
         for (final p in method.parameters) {
+          if (p.metadata.any(
+              (e) => e.element?.displayName == "IgnoreFieldInYamlInYaml")) {
+            continue;
+          }
           final annotations = p.metadata
               .where((e) => e.element?.displayName == "RequestParameter");
           if (annotations.isEmpty) {
@@ -412,6 +416,10 @@ DartType? getFutureGenericType(MethodElement method) {
     case HttpMethodDiv.get:
       {
         for (final p in method.parameters) {
+          if (p.metadata.any(
+              (e) => e.element?.displayName == "IgnoreFieldInYamlInYaml")) {
+            continue;
+          }
           final annotations = p.metadata
               .where((e) => e.element?.displayName == "RequestParameter");
           if (annotations.isEmpty) {
@@ -450,6 +458,10 @@ DartType? getFutureGenericType(MethodElement method) {
     case HttpMethodDiv.patch:
       {
         for (final p in method.parameters) {
+          if (p.metadata.any(
+              (e) => e.element?.displayName == "IgnoreFieldInYamlInYaml")) {
+            continue;
+          }
           final annotations = p.metadata
               .where((e) => e.element?.displayName == "RequestParameter");
           if (annotations.isEmpty) {
@@ -488,6 +500,10 @@ DartType? getFutureGenericType(MethodElement method) {
     case HttpMethodDiv.post:
       {
         for (final p in method.parameters) {
+          if (p.metadata.any(
+              (e) => e.element?.displayName == "IgnoreFieldInYamlInYaml")) {
+            continue;
+          }
           final annotations = p.metadata
               .where((e) => e.element?.displayName == "RequestParameter");
           if (annotations.isEmpty) {
@@ -526,6 +542,10 @@ DartType? getFutureGenericType(MethodElement method) {
     case HttpMethodDiv.put:
       {
         for (final p in method.parameters) {
+          if (p.metadata.any(
+              (e) => e.element?.displayName == "IgnoreFieldInYamlInYaml")) {
+            continue;
+          }
           final annotations = p.metadata
               .where((e) => e.element?.displayName == "RequestParameter");
           if (annotations.isEmpty) {

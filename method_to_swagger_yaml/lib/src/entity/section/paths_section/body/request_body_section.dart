@@ -20,6 +20,7 @@ class RequestBodySection {
         methodName: methodName,
         variableName: parameter.name,
         returnType: parameter.type,
+        element: parameter,
       );
 
       ComponentSection.add(componentSection);

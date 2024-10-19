@@ -41,6 +41,7 @@ class RequestParameterSection {
           returnType: stringType,
           variableName: p.name,
           methodName: methodName,
+          element: p,
         );
 
         ComponentSection.add(componentSection);
@@ -53,6 +54,7 @@ class RequestParameterSection {
           returnType: p.type,
           variableName: p.name,
           methodName: methodName,
+          element: p,
         );
 
         ComponentSection.add(componentSection);

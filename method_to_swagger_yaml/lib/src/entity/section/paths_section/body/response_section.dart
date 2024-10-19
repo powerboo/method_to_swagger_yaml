@@ -21,6 +21,7 @@ class ResponseSection {
       returnType: returnType,
       variableName: "Return",
       methodName: methodElement.name,
+      element: methodElement,
     );
 
     if (getComponentSection != null) {
@@ -31,6 +32,7 @@ class ResponseSection {
       returnType: returnType,
       variableName: "Return",
       methodName: methodElement.name,
+      element: methodElement,
     );
 
     final schema = SchemaSection(
